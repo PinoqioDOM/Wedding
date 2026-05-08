@@ -4,8 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Amelia & Julian — 12 September 2026",
-  description: "Wedding details, invitation, schedule and seating.",
+  title: "ქრისტინა & თორნიკე — 24 სექტემბერი 2026",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -12,19 +12,21 @@ type Props = {
   highlightGuestId?: string | null;
 };
 
-const TABLE_R = 64;   // px radius of round table circle
-const CHAIR_R = 100;  // px distance of chairs from table center
-const PAD     = 24;
+const TABLE_R = 64;
+const CHAIR_R = 100;
+const PAD = 24;
 
-export default function SeatingChart({ tables, seats, guests, readOnly, highlightGuestId }: Props) {
+export default function SeatingChart({
+  tables, seats, guests, readOnly, highlightGuestId,
+}: Props) {
   const supabase = createClient();
-  const [localSeats, setLocalSeats] = useState(seats);
+  const [localSeats, setLocalSeats] = useState<Seat[]>(seats);
   const [picker, setPicker] = useState<{ seat: Seat } | null>(null);
   const [filter, setFilter] = useState("");
 
   const guestById = useMemo(
     () => new Map(guests.map((g) => [g.id, g.full_name])),
-    [guests]
+    [guests],
   );
 
   const seatsByTable = useMemo(() => {
@@ -40,10 +42,15 @@ export default function SeatingChart({ tables, seats, guests, readOnly, highligh
 
   async function assign(seat: Seat, guestId: string | null) {
     setLocalSeats((prev) =>
-      prev.map((s) => (s.id === seat.id ? { ...s, guest_id: guestId } : s))
+      prev.map((s) => (s.id === seat.id ? { ...s, guest_id: guestId } : s)),
     );
     setPicker(null);
-    await supabase.from("seats").update({ guest_id: guestId }).eq("id", seat.id);
+    const update = { guest_id: guestId };
+    const { error } = await supabase
+      .from("seats")
+      .update(update as never)
+      .eq("id", seat.id);
+    if (error) alert(error.message);
   }
 
   return (
@@ -60,9 +67,8 @@ export default function SeatingChart({ tables, seats, guests, readOnly, highligh
                 </span>
               </header>
 
-              {/* round table SVG */}
-              <div className="relative mx-auto" style={{ width: 2 * (CHAIR_R + PAD), height: 2 * (CHAIR_R + PAD) }}>
-                {/* the table */}
+              <div className="relative mx-auto"
+                style={{ width: 2 * (CHAIR_R + PAD), height: 2 * (CHAIR_R + PAD) }}>
                 <div
                   className="absolute rounded-full bg-cream-100 border border-gold-400/60"
                   style={{
@@ -76,20 +82,19 @@ export default function SeatingChart({ tables, seats, guests, readOnly, highligh
                   </span>
                 </div>
 
-                {/* chairs */}
                 {Array.from({ length: 10 }).map((_, i) => {
                   const angle = (i / 10) * Math.PI * 2 - Math.PI / 2;
-                  const cx = (CHAIR_R + PAD) + Math.cos(angle) * CHAIR_R;
-                  const cy = (CHAIR_R + PAD) + Math.sin(angle) * CHAIR_R;
-                  const seat = tableSeats[i];
-                  const name = seat?.guest_id ? guestById.get(seat.guest_id) : null;
-                  const highlight = seat?.guest_id && seat.guest_id === highlightGuestId;
+                  const cx = CHAIR_R + PAD + Math.cos(angle) * CHAIR_R;
+                  const cy = CHAIR_R + PAD + Math.sin(angle) * CHAIR_R;
+                  const seat: Seat | undefined = tableSeats[i];
+                  const name = seat?.guest_id ? guestById.get(seat.guest_id) ?? null : null;
+                  const highlight = !!seat?.guest_id && seat.guest_id === highlightGuestId;
                   return (
                     <button
-                      key={i}
+                      key={seat?.id ?? `empty-${t.id}-${i}`}
                       type="button"
                       disabled={!seat}
-                      onClick={() => seat && !readOnly && setPicker({ seat })}
+                      onClick={() => { if (seat && !readOnly) setPicker({ seat }); }}
                       title={name ?? `Seat ${i + 1}`}
                       className={[
                         "absolute -translate-x-1/2 -translate-y-1/2 rounded-full",
@@ -110,13 +115,12 @@ export default function SeatingChart({ tables, seats, guests, readOnly, highligh
                 })}
               </div>
 
-              {/* list */}
               <ul className="mt-3 px-2 text-sm space-y-0.5">
                 {tableSeats.map((s, i) => (
                   <li key={s.id} className="flex justify-between gap-2 py-0.5">
                     <span className="text-ink-700/50 tabular-nums w-5">{i + 1}.</span>
                     <span className={`flex-1 truncate ${s.guest_id ? "text-ink-900" : "text-ink-700/40 italic"}`}>
-                      {s.guest_id ? guestById.get(s.guest_id) : "Empty"}
+                      {s.guest_id ? guestById.get(s.guest_id) ?? "—" : "Empty"}
                     </span>
                   </li>
                 ))}
@@ -131,10 +135,7 @@ export default function SeatingChart({ tables, seats, guests, readOnly, highligh
           className="fixed inset-0 z-50 grid place-items-center bg-ink-900/30 backdrop-blur-sm p-4"
           onClick={() => setPicker(null)}
         >
-          <div
-            className="card p-5 w-full max-w-md"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="card p-5 w-full max-w-md" onClick={(e) => e.stopPropagation()}>
             <header className="flex items-center justify-between">
               <h3 className="font-display text-xl">Assign guest</h3>
               <button className="text-ink-700/60" onClick={() => setPicker(null)}>×</button>
@@ -148,10 +149,8 @@ export default function SeatingChart({ tables, seats, guests, readOnly, highligh
             />
             <ul className="mt-3 max-h-72 overflow-y-auto divide-y divide-cream-200">
               <li>
-                <button
-                  className="w-full text-left py-2 text-ink-700/60 italic"
-                  onClick={() => assign(picker.seat, null)}
-                >
+                <button className="w-full text-left py-2 text-ink-700/60 italic"
+                  onClick={() => assign(picker.seat, null)}>
                   — Clear seat —
                 </button>
               </li>
@@ -160,10 +159,8 @@ export default function SeatingChart({ tables, seats, guests, readOnly, highligh
                 .slice(0, 50)
                 .map((g) => (
                   <li key={g.id}>
-                    <button
-                      className="w-full text-left py-2 hover:text-gold-600"
-                      onClick={() => assign(picker.seat, g.id)}
-                    >
+                    <button className="w-full text-left py-2 hover:text-gold-600"
+                      onClick={() => assign(picker.seat, g.id)}>
                       {g.full_name}
                     </button>
                   </li>
@@ -177,5 +174,5 @@ export default function SeatingChart({ tables, seats, guests, readOnly, highligh
 }
 
 function initials(name: string) {
-  return name.split(/\s+/).slice(0, 2).map((s) => s[0]?.toUpperCase()).join("");
+  return name.split(/\s+/).slice(0, 2).map((s) => s[0]?.toUpperCase() ?? "").join("");
 }

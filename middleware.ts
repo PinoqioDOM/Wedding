@@ -1,25 +1,33 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import type { Database } from "@/lib/types";
 
-// Refresh the Supabase session on every request so server components
-// see an up-to-date `auth.getUser()`.
+type CookieToSet = {
+  name: string;
+  value: string;
+  options: CookieOptions;
+};
+
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
-  const supabase = createServerClient(
+
+  const supabase = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        get: (name) => req.cookies.get(name)?.value,
-        set: (name, value, options: CookieOptions) => {
-          res.cookies.set({ name, value, ...options });
+        getAll() {
+          return req.cookies.getAll();
         },
-        remove: (name, options: CookieOptions) => {
-          res.cookies.set({ name, value: "", ...options });
+        setAll(cookiesToSet: CookieToSet[]) {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            res.cookies.set({ name, value, ...options });
+          });
         },
       },
-    }
+    },
   );
+
   await supabase.auth.getUser();
   return res;
 }

@@ -33,9 +33,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ["'Cormorant Garamond'", "Georgia", "serif"],
-        sans: ["'Inter'", "system-ui", "sans-serif"],
-        script: ["'Allura'", "cursive"],
+        display: ['"Noto Serif Georgian"', "serif"],
+        sans: ['"Noto Sans Georgian"', "sans-serif"],
+        script: ['"Allura"', "cursive"],
       },
       boxShadow: {
         soft: "0 10px 40px -20px rgba(122, 79, 60, 0.25)",

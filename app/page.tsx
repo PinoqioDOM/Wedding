@@ -7,7 +7,7 @@ import { createClient } from "@/lib/supabase/server";
 export const revalidate = 60;
 
 export default async function HomePage() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: activities } = await supabase
     .from("activities")
     .select("*")

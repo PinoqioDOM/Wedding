@@ -5,7 +5,7 @@ export const metadata = { title: "Seating chart — Amelia & Julian" };
 export const revalidate = 30;
 
 export default async function SeatingPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const [{ data: tables }, { data: seats }, { data: guests }] = await Promise.all([
     supabase.from("tables").select("*").order("label"),
     supabase.from("seats").select("*"),

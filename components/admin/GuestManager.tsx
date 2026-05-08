@@ -1,14 +1,14 @@
 "use client";
 
 import { useMemo, useState, useTransition } from "react";
-import type { Guest, RsvpStatus } from "@/lib/types";
+import type { Guest, RsvpStatus, DBTables } from "@/lib/types";
 import { createClient } from "@/lib/supabase/client";
 
 const RSVP: RsvpStatus[] = ["pending", "accepted", "declined"];
 
 export default function GuestManager({ initial }: { initial: Guest[] }) {
   const supabase = createClient();
-  const [guests, setGuests] = useState(initial);
+  const [guests, setGuests] = useState<Guest[]>(initial);
   const [q, setQ] = useState("");
   const [filter, setFilter] = useState<RsvpStatus | "all">("all");
   const [editing, setEditing] = useState<Partial<Guest> | null>(null);
@@ -20,18 +20,59 @@ export default function GuestManager({ initial }: { initial: Guest[] }) {
       if (filter !== "all" && g.rsvp_status !== filter) return false;
       if (!term) return true;
       return [g.full_name, g.email, g.group_name].some((v) =>
-        v?.toLowerCase().includes(term)
+        v?.toLowerCase().includes(term),
       );
     });
   }, [guests, q, filter]);
 
   async function save(g: Partial<Guest>) {
+    if (!g.full_name?.trim()) {
+      alert("Full name is required");
+      return;
+    }
+
     if (g.id) {
-      const { data } = await supabase.from("guests").update(g).eq("id", g.id).select().single();
-      if (data) setGuests((prev) => prev.map((x) => (x.id === data.id ? data : x)));
+      const id = g.id;
+      const update: DBTables["guests"]["Update"] = {
+        full_name: g.full_name,
+        email: g.email ?? null,
+        phone: g.phone ?? null,
+        group_name: g.group_name ?? null,
+        rsvp_status: g.rsvp_status,
+        dietary_notes: g.dietary_notes ?? null,
+        plus_one_of: g.plus_one_of ?? null,
+      };
+      const { data, error } = await supabase
+        .from("guests")
+        .update(update as never)
+        .eq("id", id)
+        .select()
+        .single();
+      if (error) return alert(error.message);
+      if (data) {
+        const row = data as Guest;
+        setGuests((prev) => prev.map((x) => (x.id === row.id ? row : x)));
+      }
     } else {
-      const { data } = await supabase.from("guests").insert(g).select().single();
-      if (data) setGuests((prev) => [data, ...prev]);
+      const insert: DBTables["guests"]["Insert"] = {
+        full_name: g.full_name,
+        email: g.email ?? null,
+        phone: g.phone ?? null,
+        group_name: g.group_name ?? null,
+        rsvp_status: g.rsvp_status ?? "pending",
+        dietary_notes: g.dietary_notes ?? null,
+        plus_one_of: g.plus_one_of ?? null,
+      };
+      const { data, error } = await supabase
+        .from("guests")
+        .insert(insert as never)
+        .select()
+        .single();
+      if (error) return alert(error.message);
+      if (data) {
+        const row = data as Guest;
+        setGuests((prev) => [row, ...prev]);
+      }
     }
     setEditing(null);
   }
@@ -39,17 +80,21 @@ export default function GuestManager({ initial }: { initial: Guest[] }) {
   async function remove(id: string) {
     if (!confirm("Remove this guest?")) return;
     start(async () => {
-      await supabase.from("guests").delete().eq("id", id);
+      const { error } = await supabase.from("guests").delete().eq("id", id);
+      if (error) return alert(error.message);
       setGuests((prev) => prev.filter((g) => g.id !== id));
     });
   }
 
-  const counts = useMemo(() => ({
-    all: guests.length,
-    pending: guests.filter((g) => g.rsvp_status === "pending").length,
-    accepted: guests.filter((g) => g.rsvp_status === "accepted").length,
-    declined: guests.filter((g) => g.rsvp_status === "declined").length,
-  }), [guests]);
+  const counts = useMemo(
+    () => ({
+      all: guests.length,
+      pending: guests.filter((g) => g.rsvp_status === "pending").length,
+      accepted: guests.filter((g) => g.rsvp_status === "accepted").length,
+      declined: guests.filter((g) => g.rsvp_status === "declined").length,
+    }),
+    [guests],
+  );
 
   return (
     <div className="card p-6">
@@ -74,7 +119,7 @@ export default function GuestManager({ initial }: { initial: Guest[] }) {
                 filter === k ? "bg-ink-900 text-cream-50" : "hover:bg-cream-100"
               }`}
             >
-              {k} <span className="text-xs opacity-60">({counts[k as keyof typeof counts]})</span>
+              {k} <span className="text-xs opacity-60">({counts[k]})</span>
             </button>
           ))}
         </div>
@@ -125,12 +170,20 @@ function RsvpPill({ s }: { s: RsvpStatus }) {
     accepted: "bg-emerald-50 text-emerald-700 border-emerald-200",
     declined: "bg-blush-100 text-blush-500 border-blush-200",
   };
-  return <span className={`inline-block text-[11px] uppercase tracking-wider px-2 py-0.5 rounded-full border ${map[s]}`}>{s}</span>;
+  return (
+    <span className={`inline-block text-[11px] uppercase tracking-wider px-2 py-0.5 rounded-full border ${map[s]}`}>
+      {s}
+    </span>
+  );
 }
 
 function GuestModal({
   value, onClose, onSave,
-}: { value: Partial<Guest>; onClose: () => void; onSave: (g: Partial<Guest>) => void }) {
+}: {
+  value: Partial<Guest>;
+  onClose: () => void;
+  onSave: (g: Partial<Guest>) => void;
+}) {
   const [g, setG] = useState<Partial<Guest>>(value);
   return (
     <div className="fixed inset-0 z-50 grid place-items-center bg-ink-900/30 backdrop-blur-sm p-4" onClick={onClose}>
@@ -141,21 +194,21 @@ function GuestModal({
       >
         <h3 className="font-display text-2xl">{g.id ? "Edit guest" : "Add guest"}</h3>
         <input className="input" placeholder="Full name" required
-               value={g.full_name ?? ""} onChange={(e) => setG({ ...g, full_name: e.target.value })} />
+          value={g.full_name ?? ""} onChange={(e) => setG({ ...g, full_name: e.target.value })} />
         <div className="grid grid-cols-2 gap-3">
           <input className="input" placeholder="Email" type="email"
-                 value={g.email ?? ""} onChange={(e) => setG({ ...g, email: e.target.value })} />
+            value={g.email ?? ""} onChange={(e) => setG({ ...g, email: e.target.value || null })} />
           <input className="input" placeholder="Phone"
-                 value={g.phone ?? ""} onChange={(e) => setG({ ...g, phone: e.target.value })} />
+            value={g.phone ?? ""} onChange={(e) => setG({ ...g, phone: e.target.value || null })} />
         </div>
         <input className="input" placeholder="Group (e.g. Bride family)"
-               value={g.group_name ?? ""} onChange={(e) => setG({ ...g, group_name: e.target.value })} />
+          value={g.group_name ?? ""} onChange={(e) => setG({ ...g, group_name: e.target.value || null })} />
         <select className="input" value={g.rsvp_status ?? "pending"}
-                onChange={(e) => setG({ ...g, rsvp_status: e.target.value as RsvpStatus })}>
+          onChange={(e) => setG({ ...g, rsvp_status: e.target.value as RsvpStatus })}>
           {RSVP.map((r) => <option key={r} value={r}>{r}</option>)}
         </select>
         <textarea className="input rounded-2xl py-3" rows={2} placeholder="Dietary notes"
-                  value={g.dietary_notes ?? ""} onChange={(e) => setG({ ...g, dietary_notes: e.target.value })} />
+          value={g.dietary_notes ?? ""} onChange={(e) => setG({ ...g, dietary_notes: e.target.value || null })} />
         <div className="flex justify-end gap-2 pt-2">
           <button type="button" className="btn-ghost" onClick={onClose}>Cancel</button>
           <button type="submit" className="btn-primary">Save</button>

@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 export const metadata = { title: "Find my seat" };
 
 export default async function FindMySeatPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const [{ data: tables }, { data: seats }, { data: guests }] = await Promise.all([
     supabase.from("tables").select("*"),
     supabase.from("seats").select("*"),
