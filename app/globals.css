@@ -1,0 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Allura&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+  body {
+    @apply bg-cream-50 text-ink-800 font-sans antialiased;
+    background-image:
+      radial-gradient(1200px 600px at 80% -10%, #fbe6e1 0%, transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, #f1e4d1 0%, transparent 55%);
+    background-attachment: fixed;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight text-ink-900;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full
+           text-sm font-medium tracking-wide transition focus:outline-none
+           focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2
+           focus-visible:ring-offset-cream-50;
+  }
+  .btn-primary { @apply btn bg-ink-900 text-cream-50 hover:bg-ink-700; }
+  .btn-ghost   { @apply btn border border-ink-900/20 text-ink-900 hover:bg-ink-900/5; }
+  .btn-gold    { @apply btn bg-gold-500 text-cream-50 hover:bg-gold-600; }
+
+  .card        { @apply rounded-2xl bg-cream-50/80 backdrop-blur shadow-card border border-cream-200; }
+  .label       { @apply text-xs uppercase tracking-[0.22em] text-gold-600; }
+  .input       { @apply w-full rounded-full border border-cream-200 bg-cream-50 px-4 py-2.5
+                       text-sm placeholder:text-ink-700/40 focus:outline-none
+                       focus:ring-2 focus:ring-gold-400 focus:border-transparent; }
+  .divider-orn { @apply flex items-center justify-center gap-3 text-gold-500; }
+  .divider-orn::before, .divider-orn::after {
+    content: ""; @apply h-px w-16 bg-gold-400/60;
+  }
+}

@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Amelia &amp; Julian — Wedding site preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Allura&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          cream: { 50:"#fdfaf5", 100:"#f8f1e6", 200:"#f1e4d1" },
+          blush: { 100:"#fbe6e1", 200:"#f4ccc4", 300:"#ecaea2", 400:"#dc8e80", 500:"#c47568" },
+          gold:  { 400:"#d4ad6a", 500:"#b8924d", 600:"#9a7838" },
+          ink:   { 700:"#4a3f3a", 800:"#332a26", 900:"#1f1916" },
+        },
+        fontFamily: {
+          display: ["'Cormorant Garamond'","Georgia","serif"],
+          sans:    ["'Inter'","system-ui","sans-serif"],
+          script:  ["'Allura'","cursive"],
+          mono:    ["'JetBrains Mono'","monospace"],
+        },
+        boxShadow: {
+          soft: "0 10px 40px -20px rgba(122,79,60,0.25)",
+          card: "0 4px 24px -8px rgba(122,79,60,0.18)",
+        },
+      },
+    },
+  };
+</script>
+<style>
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    color:#332a26;
+    background:#fdfaf5;
+    background-image:
+      radial-gradient(1200px 600px at 80% -10%, #fbe6e1 0%, transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, #f1e4d1 0%, transparent 55%);
+    background-attachment: fixed;
+  }
+  h1,h2,h3,h4{font-family:'Cormorant Garamond',Georgia,serif;letter-spacing:-.01em;color:#1f1916;}
+  .label{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#9a7838;}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+       padding:.625rem 1.25rem;border-radius:9999px;font-size:14px;font-weight:500;
+       letter-spacing:.02em;transition:all .15s;}
+  .btn-primary{background:#1f1916;color:#fdfaf5;}
+  .btn-primary:hover{background:#4a3f3a;}
+  .btn-ghost{border:1px solid rgba(31,25,22,.2);color:#1f1916;}
+  .btn-ghost:hover{background:rgba(31,25,22,.05);}
+  .btn-gold{background:#b8924d;color:#fdfaf5;}
+  .btn-gold:hover{background:#9a7838;}
+  .card{border-radius:1rem;background:rgba(253,250,245,.8);backdrop-filter:blur(8px);
+        box-shadow:0 4px 24px -8px rgba(122,79,60,.18);border:1px solid #f1e4d1;}
+  .input{width:100%;border-radius:9999px;border:1px solid #f1e4d1;background:#fdfaf5;
+         padding:.625rem 1rem;font-size:14px;}
+  .input:focus{outline:none;box-shadow:0 0 0 2px #d4ad6a;}
+  .divider-orn{display:flex;align-items:center;justify-content:center;gap:.75rem;color:#b8924d;}
+  .divider-orn::before,.divider-orn::after{content:"";height:1px;width:4rem;background:rgba(212,173,106,.6);}
+  .placeholder-img{
+    background-image:repeating-linear-gradient(45deg,#f1e4d1 0 14px,#fbe6e1 14px 28px);
+  }
+  .pill{display:inline-block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;
+        padding:.125rem .5rem;border-radius:9999px;border:1px solid;}
+  .pill-pending{background:#f8f1e6;color:#4a3f3a;border-color:#f1e4d1;}
+  .pill-accepted{background:#ecfdf5;color:#047857;border-color:#a7f3d0;}
+  .pill-declined{background:#fbe6e1;color:#c47568;border-color:#f4ccc4;}
+
+  /* Section anchor under sticky nav */
+  section[id]{scroll-margin-top:5rem;}
+</style>
+</head>
+<body class="font-sans">
+
+<!-- ============= NAV ============= -->
+<header class="sticky top-0 z-40 border-b border-cream-200/70 bg-cream-50/70 backdrop-blur">
+  <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+    <a href="#hero" class="font-script text-2xl text-ink-900 leading-none">A <span class="text-gold-500">&amp;</span> J</a>
+    <ul class="hidden md:flex items-center gap-8 text-sm tracking-wide">
+      <li><a href="#story" class="text-ink-800/80 hover:text-ink-900">Our story</a></li>
+      <li><a href="#schedule" class="text-ink-800/80 hover:text-ink-900">Schedule</a></li>
+      <li><a href="#invitation" class="text-ink-800/80 hover:text-ink-900">Invitation</a></li>
+      <li><a href="#seating" class="text-ink-800/80 hover:text-ink-900">Seating</a></li>
+      <li><a href="#findseat" class="text-ink-800/80 hover:text-ink-900">Find my seat</a></li>
+    </ul>
+    <a href="#admin" class="hidden md:inline-flex btn btn-ghost">Admin</a>
+  </nav>
+</header>
+
+<!-- ============= HERO ============= -->
+<section id="hero">
+  <div class="mx-auto max-w-6xl px-6 pt-12 pb-20 md:pt-20 md:pb-28">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      <figure class="relative">
+        <div class="aspect-[4/5] rounded-[2rem] overflow-hidden bg-cream-100 shadow-soft border border-cream-200 relative">
+          <div class="absolute inset-0 placeholder-img"></div>
+          <div class="absolute inset-0 grid place-items-center">
+            <span class="font-mono text-[11px] uppercase tracking-widest text-ink-700/60 bg-cream-50/85 px-3 py-1.5 rounded-full">couple photo · 4:5</span>
+          </div>
+        </div>
+        <div class="absolute -top-6 -left-6 w-20 h-20 rounded-full border border-gold-400/50"></div>
+        <div class="absolute -bottom-4 -right-4 w-12 h-12 rounded-full bg-blush-200/70"></div>
+      </figure>
+
+      <div>
+        <p class="label">We're getting married</p>
+        <h1 class="mt-4 leading-[0.95]" style="font-size:clamp(3rem,8vw,6rem);">
+          <span class="block italic font-light">Amelia</span>
+          <span class="block font-script text-gold-500" style="font-size:0.7em;margin:-.75rem 0;">&amp;</span>
+          <span class="block italic font-light">Julian</span>
+        </h1>
+
+        <div class="mt-8 grid grid-cols-3 gap-4 max-w-md">
+          <div class="text-center">
+            <p class="label">Date</p>
+            <p class="font-display text-2xl mt-1">12·09·26</p>
+          </div>
+          <div class="text-center border-x border-cream-200">
+            <p class="label">Where</p>
+            <p class="font-display text-lg mt-1">Lake Como</p>
+          </div>
+          <div class="text-center">
+            <p class="label">Time</p>
+            <p class="font-display text-2xl mt-1">16:00</p>
+          </div>
+        </div>
+
+        <p class="mt-6 max-w-md text-ink-700/80 leading-relaxed">
+          Villa dei Fiori, Lake Como. Join us for an afternoon of vows, an evening of feast,
+          and a night of dancing under the stars.
+        </p>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#invitation" class="btn btn-primary">View invitation</a>
+          <a href="#findseat" class="btn btn-ghost">Find my seat</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= COUNTDOWN ============= -->
+<section class="mx-auto max-w-4xl px-6 -mt-6">
+  <div class="card px-6 md:px-10 py-8">
+    <p class="text-center label">Counting the days</p>
+    <ul id="countdown" class="mt-5 grid grid-cols-4 gap-3 md:gap-6">
+      <li class="text-center"><div class="font-display text-4xl md:text-6xl tabular-nums" data-c="d">—</div><div class="mt-1 text-[10px] md:text-xs uppercase tracking-[0.25em] text-ink-700/60">Days</div></li>
+      <li class="text-center"><div class="font-display text-4xl md:text-6xl tabular-nums" data-c="h">—</div><div class="mt-1 text-[10px] md:text-xs uppercase tracking-[0.25em] text-ink-700/60">Hours</div></li>
+      <li class="text-center"><div class="font-display text-4xl md:text-6xl tabular-nums" data-c="m">—</div><div class="mt-1 text-[10px] md:text-xs uppercase tracking-[0.25em] text-ink-700/60">Minutes</div></li>
+      <li class="text-center"><div class="font-display text-4xl md:text-6xl tabular-nums" data-c="s">—</div><div class="mt-1 text-[10px] md:text-xs uppercase tracking-[0.25em] text-ink-700/60">Seconds</div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============= TEASER / STORY ============= -->
+<section id="story" class="mx-auto max-w-5xl px-6 py-24 text-center">
+  <p class="label">A little note</p>
+  <h2 class="mt-3 text-4xl md:text-5xl">Together with our families</h2>
+  <p class="mt-6 mx-auto max-w-2xl text-ink-700/80 text-lg leading-relaxed">
+    We would be honoured to share with you our most special day. Open your invitation
+    to find ceremony details, dress code and a map to the venue — and feel free to share it with your plus-one.
+  </p>
+  <div class="mt-10 flex justify-center gap-3">
+    <a href="#invitation" class="btn btn-gold">Open invitation</a>
+  </div>
+</section>
+
+<!-- ============= SCHEDULE ============= -->
+<section id="schedule" class="mx-auto max-w-5xl px-6 py-24">
+  <header class="text-center mb-14">
+    <p class="label">The day</p>
+    <h2 class="mt-2 text-4xl md:text-5xl">Order of events</h2>
+    <div class="divider-orn mt-6"><span class="text-lg">✦</span></div>
+  </header>
+
+  <ol class="relative">
+    <span class="absolute left-[5.25rem] md:left-[7rem] top-2 bottom-2 w-px bg-gold-400/40"></span>
+    <!-- entries -->
+    <template id="sched-tpl"></template>
+    <script>
+      const SCHEDULE=[
+        ["15:30","🥂","Welcome drinks","Arrival & sparkling wine in the garden","Garden terrace"],
+        ["16:00","💍","Ceremony","Exchange of vows under the cypress arch","Lakeside lawn"],
+        ["17:00","🥂","Cocktails","Aperitivo, canapés & live string trio","Loggia"],
+        ["18:30","🍽","Dinner","Five-course tasting menu","Grand hall"],
+        ["20:00","♪","First dance","Speeches, cake & opening of the dance floor","Grand hall"],
+        ["23:30","✦","Late night","Espresso, gelato cart & DJ set","Terrace"],
+      ];
+    </script>
+  </ol>
+
+  <ol id="sched-list" class="relative">
+    <span class="absolute left-[5.25rem] md:left-[7rem] top-2 bottom-2 w-px bg-gold-400/40"></span>
+  </ol>
+</section>
+
+<!-- ============= INVITATION ============= -->
+<section id="invitation" class="mx-auto max-w-3xl px-6 py-16">
+  <div class="relative">
+    <div class="card relative px-8 md:px-14 py-14 md:py-20 text-center">
+      <!-- corner ornaments -->
+      <svg class="absolute top-4 left-4 text-gold-500/70" width="36" height="36" viewBox="0 0 36 36" fill="none">
+        <path d="M2 14 C 8 14, 14 8, 14 2" stroke="currentColor" stroke-width="1"/>
+        <path d="M2 18 C 10 18, 18 10, 18 2" stroke="currentColor" stroke-width="0.7"/>
+        <circle cx="3" cy="3" r="1" fill="currentColor"/>
+      </svg>
+      <svg class="absolute top-4 right-4 rotate-90 text-gold-500/70" width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M2 14 C 8 14, 14 8, 14 2" stroke="currentColor" stroke-width="1"/><path d="M2 18 C 10 18, 18 10, 18 2" stroke="currentColor" stroke-width="0.7"/><circle cx="3" cy="3" r="1" fill="currentColor"/></svg>
+      <svg class="absolute bottom-4 left-4 -rotate-90 text-gold-500/70" width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M2 14 C 8 14, 14 8, 14 2" stroke="currentColor" stroke-width="1"/><path d="M2 18 C 10 18, 18 10, 18 2" stroke="currentColor" stroke-width="0.7"/><circle cx="3" cy="3" r="1" fill="currentColor"/></svg>
+      <svg class="absolute bottom-4 right-4 rotate-180 text-gold-500/70" width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M2 14 C 8 14, 14 8, 14 2" stroke="currentColor" stroke-width="1"/><path d="M2 18 C 10 18, 18 10, 18 2" stroke="currentColor" stroke-width="0.7"/><circle cx="3" cy="3" r="1" fill="currentColor"/></svg>
+
+      <p class="label">Together with their families</p>
+      <h1 class="mt-6 italic font-light text-5xl md:text-7xl leading-[0.95]">
+        Amelia <span class="font-script text-gold-500 text-[0.55em] align-middle">&amp;</span> Julian
+      </h1>
+      <div class="divider-orn mt-8"><span>✦</span></div>
+      <p class="mt-8 mx-auto max-w-md text-ink-700/85 leading-relaxed">
+        Request the honour of your presence at the celebration of their marriage
+      </p>
+
+      <div class="mt-10 grid grid-cols-3 gap-2 max-w-lg mx-auto">
+        <div class="py-4">
+          <p class="text-[10px] uppercase tracking-[0.25em] text-ink-700/60">Saturday</p>
+          <p class="font-display text-5xl mt-1">12</p>
+          <p class="text-[10px] uppercase tracking-[0.25em] text-gold-600 mt-1">DAY</p>
+        </div>
+        <div class="py-4 border-x border-cream-200">
+          <p class="text-[10px] uppercase tracking-[0.25em] text-ink-700/60">September</p>
+          <p class="font-display text-5xl mt-1">09</p>
+          <p class="text-[10px] uppercase tracking-[0.25em] text-gold-600 mt-1">MONTH</p>
+        </div>
+        <div class="py-4">
+          <p class="text-[10px] uppercase tracking-[0.25em] text-ink-700/60">Twenty Twenty-Six</p>
+          <p class="font-display text-5xl mt-1">26</p>
+          <p class="text-[10px] uppercase tracking-[0.25em] text-gold-600 mt-1">YEAR</p>
+        </div>
+      </div>
+
+      <p class="mt-10 font-display text-2xl">Villa dei Fiori</p>
+      <p class="text-sm text-ink-700/70 mt-1">Via del Lago 14 · Bellagio · Lake Como, Italy</p>
+      <p class="mt-8 text-sm text-ink-700/70">
+        Ceremony at <span class="font-medium text-ink-900">four o'clock</span> in the afternoon<br/>
+        Reception &amp; dinner to follow
+      </p>
+      <div class="mt-10 inline-flex items-center gap-4 px-5 py-2.5 rounded-full bg-cream-100 border border-cream-200 text-xs uppercase tracking-[0.25em] text-ink-700/70">
+        Black tie · Garden colours welcome
+      </div>
+      <div class="mt-12 flex flex-wrap items-center justify-center gap-3">
+        <button class="btn btn-primary" id="share-btn">Share invitation</button>
+        <a href="#" class="btn btn-ghost">Add to calendar</a>
+      </div>
+    </div>
+    <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full bg-blush-400 text-cream-50 grid place-items-center font-script text-2xl shadow-soft border border-blush-500/40">AJ</div>
+  </div>
+</section>
+
+<!-- ============= SEATING ============= -->
+<section id="seating" class="mx-auto max-w-6xl px-6 py-16">
+  <header class="text-center mb-10">
+    <p class="label">The reception</p>
+    <h2 class="mt-2 text-4xl md:text-5xl">Seating chart</h2>
+    <p class="mt-4 text-ink-700/70 max-w-xl mx-auto">
+      Tap any chair to see who is seated there. Looking for your own seat?
+      <a href="#findseat" class="text-gold-600 hover:underline underline-offset-4">Search by name</a>.
+    </p>
+  </header>
+  <div id="tables-grid" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3"></div>
+</section>
+
+<!-- ============= FIND MY SEAT ============= -->
+<section id="findseat" class="mx-auto max-w-3xl px-6 py-16">
+  <header class="text-center mb-10">
+    <p class="label">Welcome</p>
+    <h2 class="mt-2 text-4xl md:text-5xl">Find your seat</h2>
+    <p class="mt-4 text-ink-700/70">Type your name to discover your table and chair.</p>
+  </header>
+  <div class="card p-6 md:p-10">
+    <input id="fms-input" class="input" placeholder="Start typing your name…" />
+    <ul id="fms-results" class="mt-3 divide-y divide-cream-200 rounded-2xl border border-cream-200 overflow-hidden hidden"></ul>
+    <div id="fms-result" class="mt-8 text-center hidden">
+      <p class="label">You're seated at</p>
+      <p id="fms-table" class="font-display text-5xl mt-2"></p>
+      <p id="fms-chair" class="font-script text-gold-500 text-3xl mt-2"></p>
+      <p class="mt-6 text-ink-700/70">See you on the dance floor.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============= ADMIN PREVIEW ============= -->
+<section id="admin" class="mx-auto max-w-6xl px-6 py-16">
+  <header class="flex flex-wrap items-center justify-between gap-4 mb-8">
+    <div>
+      <p class="label">Hosts only · preview</p>
+      <h2 class="font-display text-4xl mt-1">Admin</h2>
+    </div>
+    <nav class="flex gap-1 rounded-full border border-cream-200 bg-cream-50 p-1 text-sm">
+      <button class="px-4 py-1.5 rounded-full bg-ink-900 text-cream-50">Guests</button>
+      <button class="px-4 py-1.5 rounded-full hover:bg-cream-100">Schedule</button>
+      <button class="px-4 py-1.5 rounded-full hover:bg-cream-100">Seating</button>
+    </nav>
+  </header>
+
+  <!-- stats -->
+  <div class="grid gap-4 grid-cols-2 md:grid-cols-4 mb-6">
+    <div class="card p-6"><p class="label">Guests invited</p><p class="font-display text-4xl mt-2">104</p></div>
+    <div class="card p-6"><p class="label">Accepted</p><p class="font-display text-4xl mt-2">71</p></div>
+    <div class="card p-6"><p class="label">Tables</p><p class="font-display text-4xl mt-2">11</p></div>
+    <div class="card p-6"><p class="label">Seats filled</p><p class="font-display text-4xl mt-2">68/110</p></div>
+  </div>
+
+  <!-- guest list -->
+  <div class="card p-6">
+    <header class="flex flex-wrap gap-3 items-center justify-between mb-5">
+      <h3 class="font-display text-2xl">Guest list</h3>
+      <button class="btn btn-primary">+ Add guest</button>
+    </header>
+    <div class="flex flex-wrap gap-3 mb-5">
+      <input class="input flex-1 min-w-[220px]" placeholder="Search by name, email, group…" />
+      <div class="flex gap-1 rounded-full border border-cream-200 bg-cream-50 p-1 text-sm">
+        <button class="px-3 py-1.5 rounded-full bg-ink-900 text-cream-50">all <span class="opacity-60">104</span></button>
+        <button class="px-3 py-1.5 rounded-full hover:bg-cream-100">pending <span class="opacity-60">26</span></button>
+        <button class="px-3 py-1.5 rounded-full hover:bg-cream-100">accepted <span class="opacity-60">71</span></button>
+        <button class="px-3 py-1.5 rounded-full hover:bg-cream-100">declined <span class="opacity-60">7</span></button>
+      </div>
+    </div>
+    <div class="overflow-x-auto -mx-2">
+      <table class="w-full text-sm">
+        <thead class="text-left text-xs uppercase tracking-[0.18em] text-ink-700/60">
+          <tr>
+            <th class="px-2 py-2 font-medium">Name</th>
+            <th class="px-2 py-2 font-medium">Group</th>
+            <th class="px-2 py-2 font-medium">Email</th>
+            <th class="px-2 py-2 font-medium">RSVP</th>
+            <th class="px-2 py-2 font-medium">Diet</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="guest-table-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============= FOOTER ============= -->
+<footer class="border-t border-cream-200 mt-16">
+  <div class="mx-auto max-w-6xl px-6 py-10 text-center">
+    <p class="font-script text-3xl text-gold-500">Amelia &amp; Julian</p>
+    <p class="mt-2 text-xs uppercase tracking-[0.3em] text-ink-700/60">12 · 09 · 2026 — Lake Como, Italy</p>
+  </div>
+</footer>
+
+<!-- ============= SCRIPTS ============= -->
+<script>
+/* ---------- Countdown ---------- */
+const target = new Date("2026-09-12T16:00:00+02:00");
+function tick(){
+  const ms = Math.max(0, target - Date.now());
+  const d = Math.floor(ms / 86400000);
+  const h = Math.floor((ms / 3600000) % 24);
+  const m = Math.floor((ms / 60000) % 60);
+  const s = Math.floor((ms / 1000) % 60);
+  document.querySelector('[data-c="d"]').textContent = String(d).padStart(2,"0");
+  document.querySelector('[data-c="h"]').textContent = String(h).padStart(2,"0");
+  document.querySelector('[data-c="m"]').textContent = String(m).padStart(2,"0");
+  document.querySelector('[data-c="s"]').textContent = String(s).padStart(2,"0");
+}
+tick(); setInterval(tick,1000);
+
+/* ---------- Schedule render ---------- */
+const schedHtml = SCHEDULE.map(([t,ic,title,desc,loc])=>`
+  <li class="relative grid grid-cols-[5rem_auto_1fr] md:grid-cols-[7rem_auto_1fr] gap-4 md:gap-6 py-5">
+    <time class="font-display text-2xl md:text-3xl text-ink-900 text-right pt-0.5">${t}</time>
+    <span class="relative grid place-items-center">
+      <span class="w-10 h-10 rounded-full bg-cream-50 border border-gold-400/60 grid place-items-center text-base">${ic}</span>
+    </span>
+    <div class="pt-1">
+      <h3 class="font-display text-2xl">${title}</h3>
+      <p class="text-ink-700/80 mt-0.5">${desc}</p>
+      <p class="text-xs uppercase tracking-[0.2em] text-gold-600 mt-1">${loc}</p>
+    </div>
+  </li>`).join("");
+document.getElementById("sched-list").insertAdjacentHTML("beforeend", schedHtml);
+
+/* ---------- Sample guests (110) ---------- */
+const FIRSTS = ["Amelia","Julian","Sofia","Marco","Eva","Liam","Olivia","Noah","Mia","Luca","Anna","Leo","Chiara","Matteo","Giulia","Pietro","Beatrice","Tomás","Lucia","Filippo","Aria","Elena","Daniele","Greta","Riccardo","Sara","Andrea","Martina","Stefano","Camilla","Federico","Valentina","Davide","Bianca","Edoardo","Alessia","Niccolò","Viola","Gabriele","Margherita","Simone","Carolina","Lorenzo","Elisa","Tommaso","Francesca","Alessandro","Ludovica","Giovanni","Chloe"];
+const LASTS = ["Bianchi","Rossi","Conti","Romano","Greco","Marino","Costa","Russo","Ferrari","Esposito","Ricci","Bruno","Gallo","Lombardi","Moretti","Barbieri","Fontana","Santoro","Mariani","Rinaldi","Caruso","Ferri","Galli","Martini","Leone","Longo","Gentile","Martinelli"];
+const GROUPS = ["Bride family","Groom family","College friends","Work — Amelia","Work — Julian","Childhood friends","Plus-one"];
+const RSVPS = ["pending","accepted","accepted","accepted","declined"];
+const DIETS = ["—","Vegetarian","Gluten-free","No nuts","Vegan","—","—"];
+
+function rng(seed){let s=seed; return ()=>(s=(s*9301+49297)%233280)/233280;}
+const r = rng(7);
+const GUESTS = Array.from({length:110}).map((_,i)=>({
+  id:"g"+i,
+  full_name: FIRSTS[Math.floor(r()*FIRSTS.length)] + " " + LASTS[Math.floor(r()*LASTS.length)],
+  group: GROUPS[Math.floor(r()*GROUPS.length)],
+  email: "guest"+i+"@example.com",
+  rsvp: RSVPS[Math.floor(r()*RSVPS.length)],
+  diet: DIETS[Math.floor(r()*DIETS.length)],
+}));
+
+/* ---------- Tables (11 × 10) ---------- */
+const TABLES = Array.from({length:11}).map((_,i)=>({id:"t"+i, label:"Table "+(i+1)}));
+const SEATS = [];
+let gi = 0;
+TABLES.forEach(t=>{
+  for (let s=1;s<=10;s++){
+    const fill = r() > 0.35;
+    SEATS.push({ table_id:t.id, seat_index:s, guest_id: fill && gi<GUESTS.length ? GUESTS[gi++].id : null });
+  }
+});
+
+/* ---------- Render guest table ---------- */
+const RsvpPill = s => {
+  const cls = s==="accepted" ? "pill-accepted" : s==="declined" ? "pill-declined" : "pill-pending";
+  return `<span class="pill ${cls}">${s}</span>`;
+};
+document.getElementById("guest-table-body").innerHTML = GUESTS.slice(0,9).map(g=>`
+  <tr class="border-t border-cream-200 hover:bg-cream-100/40">
+    <td class="px-2 py-2 font-medium text-ink-900">${g.full_name}</td>
+    <td class="px-2 py-2 text-ink-700/80">${g.group}</td>
+    <td class="px-2 py-2 text-ink-700/80">${g.email}</td>
+    <td class="px-2 py-2">${RsvpPill(g.rsvp)}</td>
+    <td class="px-2 py-2 text-ink-700/70">${g.diet}</td>
+    <td class="px-2 py-2 text-right whitespace-nowrap">
+      <button class="text-gold-600 hover:underline">Edit</button>
+      <span class="mx-2 text-ink-700/30">·</span>
+      <button class="text-blush-500 hover:underline">Delete</button>
+    </td>
+  </tr>`).join("");
+
+/* ---------- Render tables grid ---------- */
+const TABLE_R = 56, CHAIR_R = 92, PAD = 22;
+const guestById = new Map(GUESTS.map(g=>[g.id,g.full_name]));
+const initials = n => n.split(/\s+/).slice(0,2).map(w=>w[0]).join("").toUpperCase();
+
+document.getElementById("tables-grid").innerHTML = TABLES.map(t=>{
+  const seats = SEATS.filter(s=>s.table_id===t.id);
+  const filled = seats.filter(s=>s.guest_id).length;
+  const wh = 2*(CHAIR_R+PAD);
+  const chairs = seats.map((s,i)=>{
+    const angle = (i/10)*Math.PI*2 - Math.PI/2;
+    const cx = (CHAIR_R+PAD) + Math.cos(angle)*CHAIR_R;
+    const cy = (CHAIR_R+PAD) + Math.sin(angle)*CHAIR_R;
+    const name = s.guest_id ? guestById.get(s.guest_id) : null;
+    const cls = name
+      ? "bg-blush-200 text-ink-900 border-blush-300"
+      : "bg-cream-50 text-ink-700/60 border-cream-200 hover:border-gold-400";
+    return `<button title="${name ?? "Empty seat "+(i+1)}" class="absolute -translate-x-1/2 -translate-y-1/2 rounded-full w-9 h-9 grid place-items-center text-[10px] leading-none border transition ${cls}" style="left:${cx}px;top:${cy}px">${name?initials(name):i+1}</button>`;
+  }).join("");
+  const list = seats.map((s,i)=>`
+    <li class="flex gap-2 py-0.5 text-sm">
+      <span class="text-ink-700/50 tabular-nums w-5">${i+1}.</span>
+      <span class="flex-1 truncate ${s.guest_id?"text-ink-900":"text-ink-700/40 italic"}">${s.guest_id?guestById.get(s.guest_id):"Empty"}</span>
+    </li>`).join("");
+  return `
+  <article class="card p-4">
+    <header class="flex items-center justify-between px-2 mb-2">
+      <h3 class="font-display text-xl">${t.label}</h3>
+      <span class="text-xs text-ink-700/60">${filled}/10</span>
+    </header>
+    <div class="relative mx-auto" style="width:${wh}px;height:${wh}px;">
+      <div class="absolute rounded-full bg-cream-100 border border-gold-400/60" style="width:${2*TABLE_R}px;height:${2*TABLE_R}px;left:50%;top:50%;transform:translate(-50%,-50%);">
+        <span class="absolute inset-0 grid place-items-center font-script text-gold-500 text-2xl">${t.label.replace(/^Table\s*/i,"")}</span>
+      </div>
+      ${chairs}
+    </div>
+    <ul class="mt-3 px-2">${list}</ul>
+  </article>`;
+}).join("");
+
+/* ---------- Find my seat ---------- */
+const fmsInput = document.getElementById("fms-input");
+const fmsRes   = document.getElementById("fms-results");
+const fmsOut   = document.getElementById("fms-result");
+fmsInput.addEventListener("input", () => {
+  const q = fmsInput.value.trim().toLowerCase();
+  fmsOut.classList.add("hidden");
+  if (!q) { fmsRes.classList.add("hidden"); return; }
+  const matches = GUESTS.filter(g => g.full_name.toLowerCase().includes(q)).slice(0,8);
+  if (!matches.length) { fmsRes.classList.add("hidden"); return; }
+  fmsRes.classList.remove("hidden");
+  fmsRes.innerHTML = matches.map(g => `<li><button data-id="${g.id}" class="w-full text-left px-4 py-3 hover:bg-cream-100">${g.full_name}</button></li>`).join("");
+});
+fmsRes.addEventListener("click", e => {
+  const btn = e.target.closest("button[data-id]");
+  if (!btn) return;
+  const id = btn.dataset.id;
+  const seat = SEATS.find(s => s.guest_id === id);
+  fmsRes.classList.add("hidden");
+  fmsInput.value = guestById.get(id);
+  if (!seat) {
+    fmsOut.classList.remove("hidden");
+    document.getElementById("fms-table").textContent = "Not assigned yet";
+    document.getElementById("fms-chair").textContent = "please ask a host";
+    return;
+  }
+  const table = TABLES.find(t => t.id === seat.table_id);
+  fmsOut.classList.remove("hidden");
+  document.getElementById("fms-table").textContent = table.label;
+  document.getElementById("fms-chair").textContent = "chair n° " + seat.seat_index;
+});
+
+/* ---------- Share button ---------- */
+document.getElementById("share-btn").addEventListener("click", async () => {
+  const btn = document.getElementById("share-btn");
+  try {
+    if (navigator.share) await navigator.share({ title:"Amelia & Julian", url: location.href });
+    else await navigator.clipboard.writeText(location.href);
+    btn.textContent = "Link copied ✓";
+  } catch { btn.textContent = "Couldn't share — copy manually"; }
+  setTimeout(()=>btn.textContent="Share invitation", 2000);
+});
+</script>
+</body>
+</html>

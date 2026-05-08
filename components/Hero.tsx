@@ -1,0 +1,72 @@
+import Link from "next/link";
+
+export default function Hero() {
+  const couple = process.env.NEXT_PUBLIC_COUPLE_NAMES || "Amelia & Julian";
+  const venue = process.env.NEXT_PUBLIC_VENUE || "Villa dei Fiori, Lake Como";
+  const [first, second] = couple.split("&").map((s) => s.trim());
+
+  return (
+    <section className="relative overflow-hidden">
+      <div className="mx-auto max-w-6xl px-6 pt-12 pb-20 md:pt-20 md:pb-28">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          {/* Photo */}
+          <figure className="relative">
+            <div className="aspect-[4/5] rounded-[2rem] overflow-hidden bg-cream-100 shadow-soft border border-cream-200 relative">
+              {/* Replace with <Image src="/couple.jpg" /> */}
+              <div
+                aria-label="Couple photograph placeholder"
+                className="absolute inset-0"
+                style={{
+                  backgroundImage:
+                    "repeating-linear-gradient(45deg,#f1e4d1 0 14px,#fbe6e1 14px 28px)",
+                }}
+              />
+              <div className="absolute inset-0 grid place-items-center">
+                <span className="font-mono text-[11px] uppercase tracking-widest text-ink-700/60 bg-cream-50/85 px-3 py-1.5 rounded-full">
+                  couple photo · 4:5
+                </span>
+              </div>
+            </div>
+            <div className="absolute -top-6 -left-6 w-20 h-20 rounded-full border border-gold-400/50" />
+            <div className="absolute -bottom-4 -right-4 w-12 h-12 rounded-full bg-blush-200/70" />
+          </figure>
+
+          {/* Title */}
+          <div>
+            <p className="label">We're getting married</p>
+            <h1 className="mt-4 leading-[0.95] text-[clamp(3rem,8vw,6rem)]">
+              <span className="block font-display italic font-light">{first || "Amelia"}</span>
+              <span className="block font-script text-gold-500 text-[0.7em] -my-3">&amp;</span>
+              <span className="block font-display italic font-light">{second || "Julian"}</span>
+            </h1>
+
+            <div className="mt-8 grid grid-cols-3 gap-4 max-w-md">
+              <div className="text-center">
+                <p className="label">Date</p>
+                <p className="font-display text-2xl mt-1">12·09·26</p>
+              </div>
+              <div className="text-center border-x border-cream-200">
+                <p className="label">Where</p>
+                <p className="font-display text-lg mt-1">Lake Como</p>
+              </div>
+              <div className="text-center">
+                <p className="label">Time</p>
+                <p className="font-display text-2xl mt-1">16:00</p>
+              </div>
+            </div>
+
+            <p className="mt-6 max-w-md text-ink-700/80 leading-relaxed">
+              {venue}. Join us for an afternoon of vows, an evening of feast,
+              and a night of dancing under the stars.
+            </p>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link href="/invitation" className="btn-primary">View invitation</Link>
+              <Link href="/find-my-seat" className="btn-ghost">Find my seat</Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
