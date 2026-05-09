@@ -19,7 +19,7 @@ export default function Navbar() {
         <Link href="/" className="relative z-10 font-extrabold text-2xl text-ink-900 leading-none">
           ქ <span className="text-gold-500">&amp;</span> თ
         </Link>
-        <ul className="hidden md:flex items-center gap-8 text-sm tracking-wide relative z-10">
+        <ul className="hidden lg:flex items-center gap-8 text-sm tracking-wide relative z-10">
           {links.map((l) => (
             <li key={l.href}>
               <Link href={l.href} className="text-ink-800/80 hover:text-ink-900 transition cursor-pointer">
@@ -28,11 +28,11 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
-        <Link href="/admin" className="hidden md:inline-flex btn-ghost relative z-10">ადმინი</Link>
+        <Link href="/admin" className="hidden lg:inline-flex btn-ghost relative z-10">ადმინი</Link>
 
         <button
           aria-label="მენიუს გახსნა"
-          className="md:hidden text-ink-900 relative z-10"
+          className="lg:hidden text-ink-900 relative z-10"
           onClick={() => setOpen((v) => !v)}
         >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -42,7 +42,7 @@ export default function Navbar() {
       </nav>
 
       {open && (
-        <div className="md:hidden border-t border-cream-200 bg-cream-50">
+        <div className="lg:hidden border-t border-cream-200 bg-cream-50">
           <ul className="flex flex-col px-6 py-4 gap-3 text-sm">
             {links.map((l) => (
               <li key={l.href}>
