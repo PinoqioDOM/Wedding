@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 function diff(target: Date) {
   const ms = Math.max(0, target.getTime() - Date.now());
@@ -12,7 +12,10 @@ function diff(target: Date) {
 }
 
 export default function Countdown() {
-  const target = new Date(process.env.NEXT_PUBLIC_WEDDING_DATE || "2026-09-12T16:00:00+02:00");
+  const target = useMemo(
+    () => new Date(process.env.NEXT_PUBLIC_WEDDING_DATE || "2026-09-12T16:00:00+02:00"),
+    [],
+  );
   const [t, setT] = useState<{ d: number; h: number; m: number; s: number } | null>(null);
 
   useEffect(() => {

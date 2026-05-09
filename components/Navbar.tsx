@@ -14,25 +14,25 @@ const links = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-40 border-b border-cream-200/70 bg-cream-50/70 backdrop-blur">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="font-extrabold text-2xl text-ink-900 leading-none">
+    <header className="sticky top-0 z-40 border-b border-cream-200/70 bg-cream-50/90 backdrop-blur">
+      <nav className="relative mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <Link href="/" className="relative z-10 font-extrabold text-2xl text-ink-900 leading-none">
           ქ <span className="text-gold-500">&amp;</span> თ
         </Link>
-        <ul className="hidden md:flex items-center gap-8 text-sm tracking-wide">
+        <ul className="hidden md:flex items-center gap-8 text-sm tracking-wide relative z-10">
           {links.map((l) => (
             <li key={l.href}>
-              <Link href={l.href} className="text-ink-800/80 hover:text-ink-900 transition">
+              <Link href={l.href} className="text-ink-800/80 hover:text-ink-900 transition cursor-pointer">
                 {l.label}
               </Link>
             </li>
           ))}
         </ul>
-        <Link href="/admin" className="hidden md:inline-flex btn-ghost">ადმინი</Link>
+        <Link href="/admin" className="hidden md:inline-flex btn-ghost relative z-10">ადმინი</Link>
 
         <button
           aria-label="მენიუს გახსნა"
-          className="md:hidden text-ink-900"
+          className="md:hidden text-ink-900 relative z-10"
           onClick={() => setOpen((v) => !v)}
         >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
