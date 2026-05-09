@@ -30,9 +30,9 @@ export default function Hero() {
           <div>
             <p className="label">ჩვენ ვქორწინდებით</p>
             <h1 className="mt-4 leading-[0.95] text-[clamp(3rem,8vw,6rem)]">
-              <span className="block font-extrabold italic font-light">{first || "ქრისტინა"}</span>
+              <span className="block font-extrabold italic">{first || "ქრისტინა"}</span>
               <span className="block font-script text-gold-500 text-[0.7em] -my-3">&amp;</span>
-              <span className="block font-extrabold italic font-light">{second || "თორნიკე"}</span>
+              <span className="block font-extrabold italic">{second || "თორნიკე"}</span>
             </h1>
 
             <div className="mt-8 grid grid-cols-3 gap-4 max-w-md">
