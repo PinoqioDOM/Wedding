@@ -39,7 +39,7 @@ export default function SeatingAdmin({
   }
 
   async function removeTable(id: string) {
-    if (!confirm("Remove this table and its seats?")) return;
+    if (!confirm("წავშალოთ ეს მაგიდა და მისი ადგილები?")) return;
     const { error } = await supabase.from("tables").delete().eq("id", id);
     if (error) return alert(error.message);
     setTables((prev) => prev.filter((t) => t.id !== id));
@@ -50,9 +50,9 @@ export default function SeatingAdmin({
     <div className="space-y-6">
       <div className="card p-5 flex flex-wrap gap-3 items-center">
         <input className="input flex-1 min-w-[180px]"
-          placeholder='New table label, e.g. "Table 12"'
+          placeholder='ახალი მაგიდის სახელი, მაგ. "მაგიდა 12"'
           value={label} onChange={(e) => setLabel(e.target.value)} />
-        <button className="btn-primary" onClick={addTable}>+ Add table</button>
+        <button className="btn-primary" onClick={addTable}>+ მაგიდის დამატება</button>
         <ul className="basis-full text-sm text-ink-700/70 flex flex-wrap gap-x-4 gap-y-1 mt-2">
           {tables.map((t) => (
             <li key={t.id}>

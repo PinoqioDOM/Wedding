@@ -6,6 +6,13 @@ import { createClient } from "@/lib/supabase/client";
 
 const RSVP: RsvpStatus[] = ["pending", "accepted", "declined"];
 
+const RSVP_LABEL: Record<RsvpStatus | "all", string> = {
+  all: "ყველა",
+  pending: "მოლოდინში",
+  accepted: "დადასტურებული",
+  declined: "უარი",
+};
+
 export default function GuestManager({ initial }: { initial: Guest[] }) {
   const supabase = createClient();
   const [guests, setGuests] = useState<Guest[]>(initial);
@@ -27,7 +34,7 @@ export default function GuestManager({ initial }: { initial: Guest[] }) {
 
   async function save(g: Partial<Guest>) {
     if (!g.full_name?.trim()) {
-      alert("Full name is required");
+      alert("სახელი და გვარი სავალდებულოა");
       return;
     }
 
@@ -78,7 +85,7 @@ export default function GuestManager({ initial }: { initial: Guest[] }) {
   }
 
   async function remove(id: string) {
-    if (!confirm("Remove this guest?")) return;
+    if (!confirm("წავშალოთ ეს სტუმარი?")) return;
     start(async () => {
       const { error } = await supabase.from("guests").delete().eq("id", id);
       if (error) return alert(error.message);
@@ -99,14 +106,14 @@ export default function GuestManager({ initial }: { initial: Guest[] }) {
   return (
     <div className="card p-6">
       <header className="flex flex-wrap gap-3 items-center justify-between mb-5">
-        <h2 className="font-display text-2xl">Guest list</h2>
-        <button className="btn-primary" onClick={() => setEditing({})}>+ Add guest</button>
+        <h2 className="font-display text-2xl">სტუმრების სია</h2>
+        <button className="btn-primary" onClick={() => setEditing({})}>+ სტუმრის დამატება</button>
       </header>
 
       <div className="flex flex-wrap gap-3 mb-5">
         <input
           className="input flex-1 min-w-[220px]"
-          placeholder="Search by name, email, group…"
+          placeholder="ძებნა სახელით, ელფოსტით ან ჯგუფით…"
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />
@@ -119,7 +126,7 @@ export default function GuestManager({ initial }: { initial: Guest[] }) {
                 filter === k ? "bg-ink-900 text-cream-50" : "hover:bg-cream-100"
               }`}
             >
-              {k} <span className="text-xs opacity-60">({counts[k]})</span>
+              {RSVP_LABEL[k]} <span className="text-xs opacity-60">({counts[k]})</span>
             </button>
           ))}
         </div>
@@ -129,11 +136,11 @@ export default function GuestManager({ initial }: { initial: Guest[] }) {
         <table className="w-full text-sm">
           <thead className="text-left text-xs uppercase tracking-[0.18em] text-ink-700/60">
             <tr>
-              <th className="px-2 py-2 font-medium">Name</th>
-              <th className="px-2 py-2 font-medium">Group</th>
-              <th className="px-2 py-2 font-medium">Email</th>
-              <th className="px-2 py-2 font-medium">RSVP</th>
-              <th className="px-2 py-2 font-medium">Diet</th>
+              <th className="px-2 py-2 font-medium">სახელი</th>
+              <th className="px-2 py-2 font-medium">ჯგუფი</th>
+              <th className="px-2 py-2 font-medium">ელფოსტა</th>
+              <th className="px-2 py-2 font-medium">სტატუსი</th>
+              <th className="px-2 py-2 font-medium">კვება</th>
               <th />
             </tr>
           </thead>
@@ -146,14 +153,14 @@ export default function GuestManager({ initial }: { initial: Guest[] }) {
                 <td className="px-2 py-2"><RsvpPill s={g.rsvp_status} /></td>
                 <td className="px-2 py-2 text-ink-700/70">{g.dietary_notes ?? "—"}</td>
                 <td className="px-2 py-2 text-right whitespace-nowrap">
-                  <button className="text-gold-600 hover:underline" onClick={() => setEditing(g)}>Edit</button>
+                  <button className="text-gold-600 hover:underline" onClick={() => setEditing(g)}>რედაქტირება</button>
                   <span className="mx-2 text-ink-700/30">·</span>
-                  <button className="text-blush-500 hover:underline" onClick={() => remove(g.id)}>Delete</button>
+                  <button className="text-blush-500 hover:underline" onClick={() => remove(g.id)}>წაშლა</button>
                 </td>
               </tr>
             ))}
             {filtered.length === 0 && (
-              <tr><td colSpan={6} className="px-2 py-10 text-center text-ink-700/50">No guests match.</td></tr>
+              <tr><td colSpan={6} className="px-2 py-10 text-center text-ink-700/50">სტუმრები ვერ მოიძებნა.</td></tr>
             )}
           </tbody>
         </table>
@@ -170,9 +177,14 @@ function RsvpPill({ s }: { s: RsvpStatus }) {
     accepted: "bg-emerald-50 text-emerald-700 border-emerald-200",
     declined: "bg-blush-100 text-blush-500 border-blush-200",
   };
+  const label: Record<RsvpStatus, string> = {
+    pending: "მოლოდინში",
+    accepted: "დადასტურებული",
+    declined: "უარი",
+  };
   return (
     <span className={`inline-block text-[11px] uppercase tracking-wider px-2 py-0.5 rounded-full border ${map[s]}`}>
-      {s}
+      {label[s]}
     </span>
   );
 }
@@ -185,6 +197,11 @@ function GuestModal({
   onSave: (g: Partial<Guest>) => void;
 }) {
   const [g, setG] = useState<Partial<Guest>>(value);
+  const rsvpLabel: Record<RsvpStatus, string> = {
+    pending: "მოლოდინში",
+    accepted: "დადასტურებული",
+    declined: "უარი",
+  };
   return (
     <div className="fixed inset-0 z-50 grid place-items-center bg-ink-900/30 backdrop-blur-sm p-4" onClick={onClose}>
       <form
@@ -192,26 +209,26 @@ function GuestModal({
         onSubmit={(e) => { e.preventDefault(); onSave(g); }}
         className="card p-6 w-full max-w-lg space-y-3"
       >
-        <h3 className="font-display text-2xl">{g.id ? "Edit guest" : "Add guest"}</h3>
-        <input className="input" placeholder="Full name" required
+        <h3 className="font-display text-2xl">{g.id ? "სტუმრის რედაქტირება" : "სტუმრის დამატება"}</h3>
+        <input className="input" placeholder="სახელი და გვარი" required
           value={g.full_name ?? ""} onChange={(e) => setG({ ...g, full_name: e.target.value })} />
         <div className="grid grid-cols-2 gap-3">
-          <input className="input" placeholder="Email" type="email"
+          <input className="input" placeholder="ელფოსტა" type="email"
             value={g.email ?? ""} onChange={(e) => setG({ ...g, email: e.target.value || null })} />
-          <input className="input" placeholder="Phone"
+          <input className="input" placeholder="ტელეფონი"
             value={g.phone ?? ""} onChange={(e) => setG({ ...g, phone: e.target.value || null })} />
         </div>
-        <input className="input" placeholder="Group (e.g. Bride family)"
+        <input className="input" placeholder="ჯგუფი (მაგ. პატარძლის ოჯახი)"
           value={g.group_name ?? ""} onChange={(e) => setG({ ...g, group_name: e.target.value || null })} />
         <select className="input" value={g.rsvp_status ?? "pending"}
           onChange={(e) => setG({ ...g, rsvp_status: e.target.value as RsvpStatus })}>
-          {RSVP.map((r) => <option key={r} value={r}>{r}</option>)}
+          {RSVP.map((r) => <option key={r} value={r}>{rsvpLabel[r]}</option>)}
         </select>
-        <textarea className="input rounded-2xl py-3" rows={2} placeholder="Dietary notes"
+        <textarea className="input rounded-2xl py-3" rows={2} placeholder="კვების შენიშვნები"
           value={g.dietary_notes ?? ""} onChange={(e) => setG({ ...g, dietary_notes: e.target.value || null })} />
         <div className="flex justify-end gap-2 pt-2">
-          <button type="button" className="btn-ghost" onClick={onClose}>Cancel</button>
-          <button type="submit" className="btn-primary">Save</button>
+          <button type="button" className="btn-ghost" onClick={onClose}>გაუქმება</button>
+          <button type="submit" className="btn-primary">შენახვა</button>
         </div>
       </form>
     </div>

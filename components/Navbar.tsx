@@ -4,11 +4,11 @@ import Link from "next/link";
 import { useState } from "react";
 
 const links = [
-  { href: "/#story", label: "Our story" },
-  { href: "/#schedule", label: "Schedule" },
-  { href: "/invitation", label: "Invitation" },
-  { href: "/seating", label: "Seating" },
-  { href: "/find-my-seat", label: "Find my seat" },
+  { href: "/#story", label: "ჩვენი ისტორია" },
+  { href: "/#schedule", label: "განრიგი" },
+  { href: "/invitation", label: "მოსაწვევი" },
+  { href: "/seating", label: "დარბაზი" },
+  { href: "/find-my-seat", label: "ჩემი ადგილი" },
 ];
 
 export default function Navbar() {
@@ -16,8 +16,8 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-40 border-b border-cream-200/70 bg-cream-50/70 backdrop-blur">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="font-script text-2xl text-ink-900 leading-none">
-          A <span className="text-gold-500">&amp;</span> J
+        <Link href="/" className="font-extrabold text-2xl text-ink-900 leading-none">
+          ქ <span className="text-gold-500">&amp;</span> თ
         </Link>
         <ul className="hidden md:flex items-center gap-8 text-sm tracking-wide">
           {links.map((l) => (
@@ -28,10 +28,10 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
-        <Link href="/admin" className="hidden md:inline-flex btn-ghost">Admin</Link>
+        <Link href="/admin" className="hidden md:inline-flex btn-ghost">ადმინი</Link>
 
         <button
-          aria-label="Open menu"
+          aria-label="მენიუს გახსნა"
           className="md:hidden text-ink-900"
           onClick={() => setOpen((v) => !v)}
         >
@@ -52,7 +52,7 @@ export default function Navbar() {
               </li>
             ))}
             <li>
-              <Link href="/admin" className="block py-1 text-gold-600">Admin</Link>
+              <Link href="/admin" className="block py-1 text-gold-600">ადმინი</Link>
             </li>
           </ul>
         </div>

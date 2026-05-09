@@ -8,7 +8,7 @@ export default function InvitationCard() {
 
   const share = async () => {
     if (navigator.share) {
-      try { await navigator.share({ title: "Amelia & Julian", url }); return; }
+      try { await navigator.share({ title: "ქრისტინა & თორნიკე", url }); return; }
       catch { /* fall through */ }
     }
     await navigator.clipboard.writeText(url);
@@ -32,47 +32,47 @@ export default function InvitationCard() {
           </svg>
         ))}
 
-        <p className="label">Together with their families</p>
+        <p className="label">ოჯახთან ერთად</p>
 
         <h1 className="mt-6 font-display italic font-light text-5xl md:text-7xl leading-[0.95]">
-          Amelia <span className="font-script text-gold-500 text-[0.55em] align-middle">&amp;</span> Julian
+          ქრისტინა <span className="font-script text-gold-500 text-[0.55em] align-middle">&amp;</span> თორნიკე
         </h1>
 
         <div className="divider-orn mt-8"><span>✦</span></div>
 
         <p className="mt-8 mx-auto max-w-md text-ink-700/85 leading-relaxed">
-          Request the honour of your presence at the celebration of their marriage
+          პატივი გვექნება გიმასპინძლოთ ჩვენი ქორწილის ზეიმზე
         </p>
 
         <div className="mt-10 grid grid-cols-3 gap-2 max-w-lg mx-auto">
-          <Cell label="Saturday" value="12" sub="DAY" />
-          <Cell label="September" value="09" sub="MONTH" big />
-          <Cell label="Twenty Twenty-Six" value="26" sub="YEAR" />
+          <Cell label="ხუთშაბათი" value="24" sub="რიცხვი" />
+          <Cell label="სექტემბერი" value="09" sub="თვე" big />
+          <Cell label="ორი ათას ოცდამეექვსე" value="26" sub="წელი" />
         </div>
 
-        <p className="mt-10 font-display text-2xl">Villa dei Fiori</p>
-        <p className="text-sm text-ink-700/70 mt-1">Via del Lago 14 · Bellagio · Lake Como, Italy</p>
+        <p className="mt-10 font-display text-2xl">ვილა სააკაძე</p>
+        <p className="text-sm text-ink-700/70 mt-1">თბილისი, საქართველო</p>
 
         <p className="mt-8 text-sm text-ink-700/70">
-          Ceremony at <span className="font-medium text-ink-900">four o'clock</span> in the afternoon
-          <br /> Reception &amp; dinner to follow
+          ცერემონია — <span className="font-medium text-ink-900">18:00 საათზე</span>
+          <br /> შემდეგ — ვახშამი და დღესასწაული
         </p>
 
         <div className="mt-10 inline-flex items-center gap-4 px-5 py-2.5 rounded-full bg-cream-100 border border-cream-200 text-xs uppercase tracking-[0.25em] text-ink-700/70">
-          Black tie · Garden colours welcome
+          საღამოს ჩაცმულობა · ბაღის ფერები მისასალმებელია
         </div>
 
         <div className="mt-12 flex flex-wrap items-center justify-center gap-3">
           <button onClick={share} className="btn-primary">
-            {copied ? "Link copied ✓" : "Share invitation"}
+            {copied ? "ბმული დაკოპირდა ✓" : "მოწვევის გაზიარება"}
           </button>
-          <a href="/calendar.ics" className="btn-ghost">Add to calendar</a>
+          <a href="/calendar.ics" className="btn-ghost">კალენდარში დამატება</a>
         </div>
       </div>
 
       {/* wax seal */}
       <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full bg-blush-400 text-cream-50 grid place-items-center font-script text-2xl shadow-soft border border-blush-500/40">
-        AJ
+        ქთ
       </div>
     </article>
   );

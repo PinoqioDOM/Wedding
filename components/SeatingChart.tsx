@@ -78,7 +78,7 @@ export default function SeatingChart({
                   }}
                 >
                   <span className="absolute inset-0 grid place-items-center font-script text-gold-500 text-2xl">
-                    {t.label.replace(/^table\s*/i, "")}
+                    {t.label.replace(/^მაგიდა\s*/i, "").replace(/^table\s*/i, "")}
                   </span>
                 </div>
 
@@ -95,7 +95,7 @@ export default function SeatingChart({
                       type="button"
                       disabled={!seat}
                       onClick={() => { if (seat && !readOnly) setPicker({ seat }); }}
-                      title={name ?? `Seat ${i + 1}`}
+                      title={name ?? `ადგილი ${i + 1}`}
                       className={[
                         "absolute -translate-x-1/2 -translate-y-1/2 rounded-full",
                         "w-9 h-9 grid place-items-center text-[10px] leading-none",
@@ -120,7 +120,7 @@ export default function SeatingChart({
                   <li key={s.id} className="flex justify-between gap-2 py-0.5">
                     <span className="text-ink-700/50 tabular-nums w-5">{i + 1}.</span>
                     <span className={`flex-1 truncate ${s.guest_id ? "text-ink-900" : "text-ink-700/40 italic"}`}>
-                      {s.guest_id ? guestById.get(s.guest_id) ?? "—" : "Empty"}
+                      {s.guest_id ? guestById.get(s.guest_id) ?? "—" : "ცარიელი"}
                     </span>
                   </li>
                 ))}
@@ -137,13 +137,13 @@ export default function SeatingChart({
         >
           <div className="card p-5 w-full max-w-md" onClick={(e) => e.stopPropagation()}>
             <header className="flex items-center justify-between">
-              <h3 className="font-display text-xl">Assign guest</h3>
+              <h3 className="font-display text-xl">სტუმრის მინიჭება</h3>
               <button className="text-ink-700/60" onClick={() => setPicker(null)}>×</button>
             </header>
             <input
               autoFocus
               className="input mt-3"
-              placeholder="Search guests…"
+              placeholder="სტუმრის ძებნა…"
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
             />
@@ -151,7 +151,7 @@ export default function SeatingChart({
               <li>
                 <button className="w-full text-left py-2 text-ink-700/60 italic"
                   onClick={() => assign(picker.seat, null)}>
-                  — Clear seat —
+                  — ადგილის გასუფთავება —
                 </button>
               </li>
               {guests
