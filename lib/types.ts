@@ -38,12 +38,12 @@ export interface Seat {
   seat_index: number;
   guest_id: string | null;
 }
-
 export interface Photo {
   id: string;
   url: string;
   uploader: string | null;
   caption: string | null;
+  owner_token: string | null;
   created_at: string;
 }
 
@@ -52,8 +52,10 @@ type PhotoInsert = {
   url: string;
   uploader?: string | null;
   caption?: string | null;
+  owner_token?: string | null;
   created_at?: string;
 };
+
 
 type GuestInsert = {
   id?: string;

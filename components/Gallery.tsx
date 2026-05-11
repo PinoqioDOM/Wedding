@@ -1,17 +1,40 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import type { Photo, DBTables } from "@/lib/types";
 import { createClient } from "@/lib/supabase/client";
 
-export default function Gallery({ initial }: { initial: Photo[] }) {
+const TOKEN_KEY = "wedding-uploader-token";
+
+function getOrCreateToken(): string {
+  if (typeof window === "undefined") return "";
+  let token = localStorage.getItem(TOKEN_KEY);
+  if (!token) {
+    token = `${Date.now()}-${Math.random().toString(36).slice(2, 12)}`;
+    localStorage.setItem(TOKEN_KEY, token);
+  }
+  return token;
+}
+
+export default function Gallery({
+  initial,
+  isAdmin,
+}: {
+  initial: Photo[];
+  isAdmin: boolean;
+}) {
   const supabase = createClient();
   const [photos, setPhotos] = useState<Photo[]>(initial);
   const [uploading, setUploading] = useState(false);
   const [uploader, setUploader] = useState("");
   const [caption, setCaption] = useState("");
   const [preview, setPreview] = useState<Photo | null>(null);
+  const [myToken, setMyToken] = useState<string>("");
+
+  useEffect(() => {
+    setMyToken(getOrCreateToken());
+  }, []);
 
   async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -21,7 +44,6 @@ export default function Gallery({ initial }: { initial: Photo[] }) {
       alert("მხოლოდ სურათები მიიღება");
       return;
     }
-
     if (file.size > 10 * 1024 * 1024) {
       alert("ფაილი ძალიან დიდია (მაქს. 10MB)");
       return;
@@ -35,7 +57,6 @@ export default function Gallery({ initial }: { initial: Photo[] }) {
       const { error: uploadError } = await supabase.storage
         .from("wedding-photos")
         .upload(fileName, file);
-
       if (uploadError) throw uploadError;
 
       const { data: { publicUrl } } = supabase.storage
@@ -46,6 +67,7 @@ export default function Gallery({ initial }: { initial: Photo[] }) {
         url: publicUrl,
         uploader: uploader.trim() || null,
         caption: caption.trim() || null,
+        owner_token: myToken,
       };
 
       const { data, error } = await supabase
@@ -66,6 +88,33 @@ export default function Gallery({ initial }: { initial: Photo[] }) {
       setUploading(false);
       e.target.value = "";
     }
+  }
+
+  async function deletePhoto(photo: Photo) {
+    if (!confirm("ნამდვილად გსურთ ფოტოს წაშლა?")) return;
+
+    // ფაილის წაშლა Storage-დან
+    try {
+      const fileName = photo.url.split("/").pop();
+      if (fileName) {
+        await supabase.storage.from("wedding-photos").remove([fileName]);
+      }
+    } catch {
+      // ვაგრძელებთ DB წაშლას მაინც
+    }
+
+    const { error } = await supabase.from("photos").delete().eq("id", photo.id);
+    if (error) {
+      alert(error.message);
+      return;
+    }
+    setPhotos((prev) => prev.filter((p) => p.id !== photo.id));
+    if (preview?.id === photo.id) setPreview(null);
+  }
+
+  function canDelete(p: Photo): boolean {
+    if (isAdmin) return true;
+    return !!myToken && p.owner_token === myToken;
   }
 
   return (
@@ -107,29 +156,48 @@ export default function Gallery({ initial }: { initial: Photo[] }) {
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
           {photos.map((p) => (
-            <button
+            <div
               key={p.id}
-              onClick={() => setPreview(p)}
               className="group relative aspect-square overflow-hidden rounded-2xl bg-cream-100 border border-cream-200"
             >
-              <Image
-                src={p.url}
-                alt={p.caption ?? "wedding photo"}
-                fill
-                sizes="(max-width: 768px) 50vw, 25vw"
-                className="object-cover group-hover:scale-105 transition duration-500"
-              />
-              {(p.uploader || p.caption) && (
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink-900/70 to-transparent p-3 text-left">
-                  {p.caption && (
-                    <p className="text-cream-50 text-sm font-medium truncate">{p.caption}</p>
-                  )}
-                  {p.uploader && (
-                    <p className="text-cream-50/80 text-xs">— {p.uploader}</p>
-                  )}
-                </div>
+              <button
+                onClick={() => setPreview(p)}
+                className="absolute inset-0 w-full h-full"
+              >
+                <Image
+                  src={p.url}
+                  alt={p.caption ?? "wedding photo"}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                  className="object-cover group-hover:scale-105 transition duration-500"
+                />
+                {(p.uploader || p.caption) && (
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink-900/70 to-transparent p-3 text-left">
+                    {p.caption && (
+                      <p className="text-cream-50 text-sm font-medium truncate">
+                        {p.caption}
+                      </p>
+                    )}
+                    {p.uploader && (
+                      <p className="text-cream-50/80 text-xs">— {p.uploader}</p>
+                    )}
+                  </div>
+                )}
+              </button>
+
+              {canDelete(p) && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deletePhoto(p);
+                  }}
+                  className="absolute top-2 right-2 z-10 w-8 h-8 rounded-full bg-ink-900/70 text-cream-50 grid place-items-center text-sm hover:bg-blush-500 transition"
+                  title="წაშლა"
+                >
+                  ×
+                </button>
               )}
-            </button>
+            </div>
           ))}
         </div>
       )}
@@ -158,9 +226,21 @@ export default function Gallery({ initial }: { initial: Photo[] }) {
             </div>
             {(preview.caption || preview.uploader) && (
               <div className="text-center mt-4 text-cream-50">
-                {preview.caption && <p className="font-display text-xl">{preview.caption}</p>}
-                {preview.uploader && <p className="text-sm opacity-80 mt-1">— {preview.uploader}</p>}
+                {preview.caption && (
+                  <p className="font-display text-xl">{preview.caption}</p>
+                )}
+                {preview.uploader && (
+                  <p className="text-sm opacity-80 mt-1">— {preview.uploader}</p>
+                )}
               </div>
+            )}
+            {canDelete(preview) && (
+              <button
+                onClick={() => deletePhoto(preview)}
+                className="block mx-auto mt-4 px-5 py-2 rounded-full bg-blush-500 text-cream-50 text-sm hover:bg-blush-600 transition"
+              >
+                წაშლა
+              </button>
             )}
           </div>
         </div>
