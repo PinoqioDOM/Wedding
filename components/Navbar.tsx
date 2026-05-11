@@ -8,7 +8,7 @@ const links = [
   { href: "/#schedule", label: "განრიგი" },
   { href: "/invitation", label: "მოსაწვევი" },
   { href: "/seating", label: "დარბაზი" },
-  { href: "/find-my-seat", label: "ჩემი ადგილი" },
+  { href: "/gallery", label: "გალერეა" },
 ];
 
 export default function Navbar() {

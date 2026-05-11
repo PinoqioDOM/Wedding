@@ -39,6 +39,22 @@ export interface Seat {
   guest_id: string | null;
 }
 
+export interface Photo {
+  id: string;
+  url: string;
+  uploader: string | null;
+  caption: string | null;
+  created_at: string;
+}
+
+type PhotoInsert = {
+  id?: string;
+  url: string;
+  uploader?: string | null;
+  caption?: string | null;
+  created_at?: string;
+};
+
 type GuestInsert = {
   id?: string;
   full_name: string;
@@ -103,6 +119,12 @@ export type Database = {
         Row: Seat;
         Insert: SeatInsert;
         Update: Partial<SeatInsert>;
+        Relationships: [];
+      };
+      photos: {
+        Row: Photo;
+        Insert: PhotoInsert;
+        Update: Partial<PhotoInsert>;
         Relationships: [];
       };
     };

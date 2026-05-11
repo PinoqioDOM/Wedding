@@ -1,4 +1,5 @@
 import SeatingChart from "@/components/SeatingChart";
+import FindMySeat from "@/components/FindMySeat";
 import { createClient } from "@/lib/supabase/server";
 
 export const metadata = { title: "დარბაზი — ქრისტინა & თორნიკე" };
@@ -14,13 +15,24 @@ export default async function SeatingPage() {
 
   return (
     <section className="mx-auto max-w-6xl px-6 py-16">
+      {/* Find my seat — top */}
       <header className="text-center mb-10">
-        <p className="label">დარბაზი</p>
-        <h1 className="mt-2 text-4xl md:text-5xl">მაგიდების განლაგება</h1>
-        <p className="mt-4 text-ink-700/70 max-w-xl mx-auto">
-          დააჭირეთ ნებისმიერ ადგილს რომ ნახოთ ვინ ზის იქ. ეძებთ თქვენს ადგილს?
-          <a href="/find-my-seat" className="text-gold-600 underline-offset-4 hover:underline ml-1">სახელით ძებნა</a>.
+        <p className="label">მოგესალმებით</p>
+        <h1 className="mt-2 text-4xl md:text-5xl">იპოვეთ თქვენი ადგილი</h1>
+        <p className="mt-4 text-ink-700/70">
+          ჩაწერეთ თქვენი სახელი და ნახეთ თქვენი მაგიდა და სკამი.
         </p>
+      </header>
+
+      <div className="max-w-2xl mx-auto mb-20">
+        <FindMySeat tables={tables ?? []} seats={seats ?? []} guests={guests ?? []} />
+      </div>
+
+      {/* Full seating chart */}
+      <header className="text-center mb-10">
+        <div className="divider-orn mb-8"><span>✦</span></div>
+        <p className="label">დარბაზი</p>
+        <h2 className="mt-2 text-3xl md:text-4xl">მაგიდების განლაგება</h2>
       </header>
 
       <SeatingChart
