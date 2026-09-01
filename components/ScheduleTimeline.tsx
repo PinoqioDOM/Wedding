@@ -30,21 +30,21 @@ export default function ScheduleTimeline({ activities }: { activities: Activity[
       <span className="absolute left-[6.25rem] md:left-[8.25rem] top-2 bottom-2 w-px bg-gold-400/40" aria-hidden />
       {activities.map((a) => (
         <li key={a.id} className="relative grid grid-cols-[5rem_auto_1fr] md:grid-cols-[7rem_auto_1fr] gap-4 md:gap-6 py-5">
-          <time className="font-display text-2xl md:text-3xl text-ink-900 text-right pt-5">
+          <time className="font-display text-2xl md:text-3xl text-ink-900 text-right leading-none">
             {fmt(a.starts_at)}
           </time>
-          <span className="relative grid place-items-center pl-2">
+          <span className="relative flex justify-center pl-2">
             <span className="w-10 h-10 rounded-full bg-cream-50 border border-gold-400/60 grid place-items-center text-base">
               {ICONS[a.icon ?? "star"] ?? "✦"}
             </span>
           </span>
-          <div className="pt-1">
-            <h3 className="font-display text-2xl">{a.title}</h3>
+          <div>
+            <h3 className="font-display text-2xl leading-none">{a.title}</h3>
             {a.description && (
-              <p className="text-ink-700/80 mt-0.5">{a.description}</p>
+              <p className="text-ink-700/80 mt-1.5">{a.description}</p>
             )}
             {a.location && (
-              <p className="text-xs uppercase tracking-[0.2em] text-gold-600 mt-1">{a.location}</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-gold-600 mt-1.5">{a.location}</p>
             )}
           </div>
         </li>
