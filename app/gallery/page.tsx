@@ -7,13 +7,13 @@ export const revalidate = 0;
 
 export default async function GalleryPage() {
   const supabase = await createClient();
-  const [{ data: photos }, { data: { user } }] = await Promise.all([
+  const [{ data: photos }, { data: { session } }] = await Promise.all([
     supabase.from("photos").select("*").order("created_at", { ascending: false }),
-    supabase.auth.getUser(),
+    supabase.auth.getSession(),
   ]);
 
-  const isAdmin = (user?.user_metadata as { role?: string } | undefined)?.role === "admin";
-
+  const isAdmin = (session?.user?.user_metadata as { role?: string } | undefined)?.role === "admin";
+  
   return (
     <section className="mx-auto max-w-6xl px-6 py-16">
       <header className="text-center mb-12">
