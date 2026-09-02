@@ -41,13 +41,13 @@ export default function InvitationCard() {
         <div className="divider-orn mt-8"><span>✦</span></div>
 
         <p className="mt-8 mx-auto max-w-md text-ink-700/85 leading-relaxed">
-          პატივი გვექნება გიმასპინძლოთ ჩვენი ქორწილის ზეიმზე
+          პატივი გვექნება გიმასპინძლოთ ჩვენი ქორწილში
         </p>
 
         <div className="mt-10 grid grid-cols-3 gap-2 max-w-lg mx-auto">
           <Cell label="ხუთშაბათი" value="24" sub="რიცხვი" />
           <Cell label="სექტემბერი" value="09" sub="თვე" big />
-          <Cell label="ორი ათას ოცდამეექვსე" value="26" sub="წელი" />
+          <Cell label="წელი" value="2026" sub="წელი" />
         </div>
 
         <p className="mt-10 font-display text-2xl">ვილა სააკაძე</p>
@@ -55,12 +55,7 @@ export default function InvitationCard() {
 
         <p className="mt-8 text-sm text-ink-700/70">
           ცერემონია — <span className="font-medium text-ink-900">18:00 საათზე</span>
-          <br /> შემდეგ — ვახშამი და დღესასწაული
         </p>
-
-        <div className="mt-10 inline-flex items-center gap-4 px-5 py-2.5 rounded-full bg-cream-100 border border-cream-200 text-xs uppercase tracking-[0.25em] text-ink-700/70">
-          საღამოს ჩაცმულობა · ბაღის ფერები მისასალმებელია
-        </div>
 
         <div className="mt-12 flex flex-wrap items-center justify-center gap-3">
           <button onClick={share} className="btn-primary">
