@@ -2,7 +2,7 @@ import SeatingChart from "@/components/SeatingChart";
 import FindMySeat from "@/components/FindMySeat";
 import { createClient } from "@/lib/supabase/server";
 
-export const metadata = { title: "დარბაზი — ქრისტინა & თორნიკე" };
+export const metadata = { title: "დარბაზი — თორნიკე & ქრისტინა" };
 export const revalidate = 30;
 
 export default async function SeatingPage() {

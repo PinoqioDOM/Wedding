@@ -2,7 +2,7 @@ import Gallery from "@/components/Gallery";
 import { createClient } from "@/lib/supabase/server";
 import type { Photo } from "@/lib/types";
 
-export const metadata = { title: "გალერეა — ქრისტინა & თორნიკე" };
+export const metadata = { title: "გალერეა — თორნიკე & ქრისტინა" };
 export const revalidate = 0;
 
 export default async function GalleryPage() {

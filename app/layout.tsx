@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "ქრისტინა & თორნიკე — 24 სექტემბერი 2026",
+  title: "თორნიკე & ქრისტინა — 24 სექტემბერი 2026",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

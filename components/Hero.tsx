@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function Hero() {
-  const couple = process.env.NEXT_PUBLIC_COUPLE_NAMES || "ქრისტინა & თორნიკე";
+  const couple = process.env.NEXT_PUBLIC_COUPLE_NAMES || "თორნიკე & ქრისტინა";
   const venue = process.env.NEXT_PUBLIC_VENUE || "ვილა სააკაძე";
   const [first, second] = couple.split("&").map((s) => s.trim());
 
@@ -15,7 +15,7 @@ export default function Hero() {
             <div className="aspect-[4/5] rounded-[2rem] overflow-hidden bg-cream-100 shadow-soft border border-cream-200 relative">
               <Image
                 src="/Wedding.jpeg"
-                alt="ქრისტინა და თორნიკე"
+                alt="თორნიკე & ქრისტინა"
                 fill
                 priority
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -30,9 +30,9 @@ export default function Hero() {
           <div>
             <p className="label">ჩვენ ვქორწინდებით</p>
             <h1 className="mt-4 leading-[0.95] text-[clamp(3rem,8vw,6rem)]">
-              <span className="block font-extrabold italic">{first || "ქრისტინა"}</span>
+              <span className="block font-extrabold italic">{first || "თორნიკე"}</span>
               <span className="block font-script text-gold-500 text-[0.7em] -my-3">&amp;</span>
-              <span className="block font-extrabold italic">{second || "თორნიკე"}</span>
+              <span className="block font-extrabold italic">{second || "ქრისტინა"}</span>
             </h1>
 
             <div className="mt-8 grid grid-cols-3 gap-4 max-w-md">

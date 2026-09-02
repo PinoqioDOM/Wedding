@@ -8,7 +8,7 @@ export default function InvitationCard() {
 
   const share = async () => {
     if (navigator.share) {
-      try { await navigator.share({ title: "ქრისტინა & თორნიკე", url }); return; }
+      try { await navigator.share({ title: "თორნიკე & ქრისტინა", url }); return; }
       catch { /* fall through */ }
     }
     await navigator.clipboard.writeText(url);
@@ -35,7 +35,7 @@ export default function InvitationCard() {
         <p className="label">ოჯახთან ერთად</p>
 
         <h1 className="mt-6 font-display italic font-light text-5xl md:text-7xl leading-[0.95]">
-          ქრისტინა <span className="font-script text-gold-500 text-[0.55em] align-middle">&amp;</span> თორნიკე
+          თორნიკე <span className="font-script text-gold-500 text-[0.55em] align-middle">&amp;</span> ქრისტინა
         </h1>
 
         <div className="divider-orn mt-8"><span>✦</span></div>

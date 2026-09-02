@@ -17,7 +17,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-40 border-b border-cream-200/70 bg-cream-50/90 backdrop-blur">
       <nav className="relative mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link href="/" className="relative z-10 font-extrabold text-2xl text-ink-900 leading-none">
-          ქ <span className="text-gold-500">&amp;</span> თ
+          თ <span className="text-gold-500">&amp;</span> ქ
         </Link>
         <ul className="hidden lg:flex items-center gap-8 text-sm tracking-wide relative z-10">
           {links.map((l) => (
