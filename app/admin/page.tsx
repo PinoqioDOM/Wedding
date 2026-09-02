@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import InviteLinkGenerator from "@/components/InviteLinkGenerator";
 
 export default async function AdminHome() {
   const supabase = await createClient();
@@ -17,13 +18,17 @@ export default async function AdminHome() {
   ];
 
   return (
-    <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
-      {stats.map((s) => (
-        <div key={s.label} className="card p-6">
-          <p className="label">{s.label}</p>
-          <p className="font-display text-4xl mt-2">{s.value}</p>
-        </div>
-      ))}
+    <div className="space-y-8">
+      <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
+        {stats.map((s) => (
+          <div key={s.label} className="card p-6">
+            <p className="label">{s.label}</p>
+            <p className="font-display text-4xl mt-2">{s.value}</p>
+          </div>
+        ))}
+      </div>
+
+      <InviteLinkGenerator />
     </div>
   );
 }

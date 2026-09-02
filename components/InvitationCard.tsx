@@ -67,7 +67,7 @@ export default function InvitationCard() {
 
       {/* wax seal */}
       <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full bg-blush-400 text-cream-50 grid place-items-center font-script text-2xl shadow-soft border border-blush-500/40">
-        ქთ
+        თ&ქ
       </div>
     </article>
   );
