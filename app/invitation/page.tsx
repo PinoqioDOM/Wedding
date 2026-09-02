@@ -1,6 +1,6 @@
 import InvitationCard from "@/components/InvitationCard";
 
-export const metadata = { title: "Invitation — Amelia & Julian" };
+export const metadata = { title: "Invitation — თორნიკე & ქრისტინა" };
 
 export default function InvitationPage() {
   return (
