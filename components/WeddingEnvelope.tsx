@@ -49,6 +49,23 @@ export default function WeddingEnvelope({
 
   return (
     <div className="min-h-[100vh] flex flex-col items-center font-extrabold justify-center gap-5 px-4">
+      {/* wedding.jpg — მთელი გვერდის ფონად ჩნდება წერილის გახსნის შემდეგ */}
+      <motion.div
+        className="fixed inset-0 -z-10"
+        style={{
+          backgroundImage: `url(${WEDDING_BG})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+        initial={false}
+        animate={{ opacity: letterOpen ? 1 : 0 }}
+        transition={{
+          duration: 0.8,
+          ease: EASE,
+          delay: letterOpen ? 0.55 : 0,
+        }}
+      />
+
       <div
         className="relative w-full max-w-[300px] sm:max-w-[380px] md:max-w-[460px] lg:max-w-[520px] aspect-square overflow-hidden"
         style={{ perspective: 1600 }}
@@ -63,23 +80,6 @@ export default function WeddingEnvelope({
           }}
           initial={false}
           animate={{ opacity: letterOpen ? 0 : 1 }}
-          transition={{
-            duration: 0.6,
-            ease: EASE,
-            delay: letterOpen ? 0.55 : 0,
-          }}
-        />
-
-        {/* wedding.jpg — ჩნდება კონვერტის ადგილას, წერილის მიღმა ფონად */}
-        <motion.div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: `url(${WEDDING_BG})`,
-            backgroundSize: "160% auto",
-            backgroundPosition: "center",
-          }}
-          initial={false}
-          animate={{ opacity: letterOpen ? 1 : 0 }}
           transition={{
             duration: 0.6,
             ease: EASE,
