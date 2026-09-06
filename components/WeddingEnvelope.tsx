@@ -30,7 +30,13 @@ function useTypewriter(text: string, active: boolean, speed = 45) {
   return output;
 }
 
-export default function WeddingEnvelope({ guestName }: { guestName?: string }) {
+export default function WeddingEnvelope({
+  guestName,
+  onContinue,
+}: {
+  guestName?: string;
+  onContinue?: () => void;
+}) {
   const [stage, setStage] = useState<Stage>("closed");
   const typed = useTypewriter(QUOTE, stage === "open");
 
@@ -111,12 +117,22 @@ export default function WeddingEnvelope({ guestName }: { guestName?: string }) {
           >
             <p className="text-sm text-ink-700/90">ვილა სააკაძე</p>
             <p className="mt-2 text-sm text-ink-900">24 სექტემბერი 18:00</p>
-            <Link
-              href="/"
-              className="mt-3 inline-block text-xs text-gold-600 hover:text-ink-900 underline underline-offset-4 decoration-gold-400/50 transition-colors"
-            >
-              სრული დეტალები →
-            </Link>
+            {onContinue ? (
+              <button
+                type="button"
+                onClick={onContinue}
+                className="mt-3 inline-block text-xs text-gold-600 hover:text-ink-900 underline underline-offset-4 decoration-gold-400/50 transition-colors"
+              >
+                სრული დეტალები →
+              </button>
+            ) : (
+              <Link
+                href="/"
+                className="mt-3 inline-block text-xs text-gold-600 hover:text-ink-900 underline underline-offset-4 decoration-gold-400/50 transition-colors"
+              >
+                სრული დეტალები →
+              </Link>
+            )}
           </motion.div>
         </motion.div>
 

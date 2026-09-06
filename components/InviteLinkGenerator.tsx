@@ -8,7 +8,7 @@ export default function InviteLinkGenerator() {
 
   const link =
     typeof window !== "undefined" && name.trim()
-      ? `${window.location.origin}/invitation?to=${encodeURIComponent(name.trim())}`
+      ? `${window.location.origin}/?to=${encodeURIComponent(name.trim())}`
       : "";
 
   const copy = async () => {
