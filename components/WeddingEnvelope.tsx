@@ -7,7 +7,10 @@ import { motion } from "framer-motion";
 type Stage = "closed" | "opening" | "open";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-const QUOTE = "მოწვეული ხართ ჩვენს ქორწილში";
+const QUOTE = "გეპატიჟებით ჩვენს ქორწილში";
+
+// 0 = სურათი სრულად ჩანს ტექსტს მიღმა, 1 = სრულად ერთფეროვანი ფონი. აქ არეგულირეთ.
+const TEXT_BG_OPACITY = 0.55;
 
 function useTypewriter(text: string, active: boolean, speed = 45) {
   const [output, setOutput] = useState("");
@@ -33,29 +36,46 @@ export default function WeddingEnvelope({ guestName }: { guestName?: string }) {
 
   const open = () => {
     setStage("opening");
-    setTimeout(() => setStage("open"), 750);
+    setTimeout(() => setStage("open"), 1100);
   };
 
   const flapOpen = stage !== "closed";
 
   return (
-    <div className="min-h-[60vh] flex flex-col items-center justify-center gap-5 px-4">
+    <div className="min-h-[100vh] flex flex-col items-center font-extrabold justify-center gap-5 px-4">
       <div
-        className="relative w-full max-w-[300px] aspect-square"
+        className="relative w-full max-w-[350px] aspect-square"
         style={{ perspective: 1600 }}
       >
-        {/* წერილი — ფლაპების ქვეშ */}
+        {/* საერთო ფონის სურათი — ერთადერთი ფენა, ყოველთვის იქ */}
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: `url(${ENVELOPE_BG})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+
+        {/* ტექსტის ქვეშა ფონი — აქ არეგულირებთ რამდენად ჩანდეს სურათი ტექსტს მიღმა */}
         <motion.div
-          className="absolute inset-[6%] rounded-[2px] bg-cream-50 border border-gold-400/30 shadow-[0_12px_28px_-14px_rgba(90,70,30,0.55)] flex flex-col items-center justify-center gap-3 px-5 py-6 text-center z-0"
+          className="absolute inset-[9%] flex flex-col mt-2 items-center justify-center gap-2.5 px-3 py-3 text-center z-10 rounded-[2px]"
+          style={{ backgroundColor: `rgba(251,247,239, ${TEXT_BG_OPACITY})` }}
           initial={false}
           animate={{ opacity: stage === "open" ? 1 : 0 }}
           transition={{ duration: 0.5, ease: EASE }}
         >
-          <p className="font-display text-base text-ink-900 leading-snug">
+          <p
+            className="font-display text-base text-ink-900 leading-snug"
+            style={{ textShadow: "0 1px 8px rgba(255,255,255,0.9), 0 1px 2px rgba(255,255,255,0.95)" }}
+          >
             თორნიკე <span className="font-script text-gold-500">&amp;</span> ქრისტინა
           </p>
 
-          <p className="font-display italic text-lg text-ink-900 leading-snug min-h-[3.2em]">
+          <p
+            className="font-display italic text-lg text-ink-900 leading-snug min-h-[3.2em]"
+            style={{ textShadow: "0 1px 8px rgba(255,255,255,0.9), 0 1px 2px rgba(255,255,255,0.95)" }}
+          >
             {typed}
             <span className="inline-block w-[2px] h-[1em] bg-gold-500/70 ml-0.5 align-middle animate-pulse" />
           </p>
@@ -64,11 +84,10 @@ export default function WeddingEnvelope({ guestName }: { guestName?: string }) {
             initial={false}
             animate={{ opacity: typed === QUOTE ? 1 : 0, y: typed === QUOTE ? 0 : 6 }}
             transition={{ duration: 0.5, ease: EASE }}
+            style={{ textShadow: "0 1px 8px rgba(255,255,255,0.9), 0 1px 2px rgba(255,255,255,0.95)" }}
           >
-            <p className="text-sm text-ink-700/80">ვილა სააკაძე</p>
-            <p className="text-xs text-ink-700/60">კახეთი, საქართველო</p>
-            <p className="mt-2 text-sm text-ink-900">24 სექტემბერი, 2026</p>
-            <p className="text-xs text-ink-700/60">ცერემონია — 18:00 საათზე</p>
+            <p className="text-sm text-ink-700/90">ვილა სააკაძე</p>
+            <p className="mt-2 text-sm text-ink-900">24 სექტემბერი 18:00</p>
             <Link
               href="/"
               className="mt-3 inline-block text-xs text-gold-600 hover:text-ink-900 underline underline-offset-4 decoration-gold-400/50 transition-colors"
@@ -78,11 +97,11 @@ export default function WeddingEnvelope({ guestName }: { guestName?: string }) {
           </motion.div>
         </motion.div>
 
-        {/* 4 ფლაპი — თითოეული საკუთარ კიდეზე იხსნება */}
-        <Flap edge="top" open={flapOpen} />
-        <Flap edge="right" open={flapOpen} />
-        <Flap edge="bottom" open={flapOpen} />
-        <Flap edge="left" open={flapOpen} />
+        {/* 4 ფლაპი — თანმიმდევრობით, საათის ისრის მიმართულებით (ზედა → მარჯვენა → ქვედა → მარცხენა) */}
+        <Flap edge="top" open={flapOpen} delay={0} />
+        <Flap edge="right" open={flapOpen} delay={0.15} />
+        <Flap edge="bottom" open={flapOpen} delay={0.3} />
+        <Flap edge="left" open={flapOpen} delay={0.45} />
 
         {/* ბეჭედი */}
         {stage === "closed" && (
@@ -134,21 +153,35 @@ const SIGN: Record<string, number> = {
   right: -1,
 };
 
-function Flap({ edge, open }: { edge: "top" | "right" | "bottom" | "left"; open: boolean }) {
+const ENVELOPE_BG = "/cover.jpg";
+
+function Flap({
+  edge,
+  open,
+  delay,
+}: {
+  edge: "top" | "right" | "bottom" | "left";
+  open: boolean;
+  delay: number;
+}) {
   const axis = AXIS[edge];
   const angle = open ? SIGN[edge] * 165 : 0;
 
   return (
     <motion.div
-      className="absolute inset-0 bg-gradient-to-br from-cream-300 to-cream-200 border border-gold-400/20"
+      className="absolute inset-0"
       style={{
+        backgroundImage: `linear-gradient(rgba(15,12,8,0.35), rgba(15,12,8,0.35)), url(${ENVELOPE_BG})`,
+        backgroundSize: "cover",
+        backgroundPosition: "0;1;2;3;",
         clipPath: CLIP[edge],
         transformOrigin: ORIGIN[edge],
         transformStyle: "preserve-3d",
         zIndex: open ? 5 : 30,
+        boxShadow: "inset 0 0 0 1px rgba(201,163,90,0.55)",
       }}
       animate={{ [axis]: angle }}
-      transition={{ duration: 0.7, ease: EASE, delay: open ? 0 : 0 }}
+      transition={{ duration: 0.6, ease: EASE, delay: open ? delay : 0 }}
     />
   );
 }
