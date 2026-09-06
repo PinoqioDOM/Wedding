@@ -50,7 +50,7 @@ export default function WeddingEnvelope({
   return (
     <div className="min-h-[100vh] flex flex-col items-center font-extrabold justify-center gap-5 px-4">
       <div
-        className="relative w-full max-w-[350px] sm:max-w-[380px] md:max-w-[460px] lg:max-w-[520px] aspect-square overflow-hidden"
+        className="relative w-full max-w-[300px] sm:max-w-[380px] md:max-w-[460px] lg:max-w-[520px] aspect-square overflow-hidden"
         style={{ perspective: 1600 }}
       >
         {/* საერთო ფონის სურათი (კონვერტი) — ქრება წერილის გამოსვლის შემდეგ */}
@@ -75,7 +75,7 @@ export default function WeddingEnvelope({
           className="absolute inset-0 z-0"
           style={{
             backgroundImage: `url(${WEDDING_BG})`,
-            backgroundSize: "cover",
+            backgroundSize: "160% auto",
             backgroundPosition: "center",
           }}
           initial={false}
@@ -116,7 +116,7 @@ export default function WeddingEnvelope({
           </p>
 
           <p
-            className="font-display italic text-xl sm:text-xl md:text-2xl text-ink-900 leading-snug min-h-[3.2em]"
+            className="font-display italic text-lg sm:text-xl md:text-2xl text-ink-900 leading-snug min-h-[3.2em]"
             style={{ textShadow: "0 1px 8px rgba(255,255,255,0.9), 0 1px 2px rgba(255,255,255,0.95)" }}
           >
             {typed}
