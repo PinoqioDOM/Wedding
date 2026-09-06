@@ -3,6 +3,7 @@ import Countdown from "@/components/Countdown";
 import InvitationTeaser from "@/components/InvitationTeaser";
 import ScheduleTimeline from "@/components/ScheduleTimeline";
 import { createClient } from "@/lib/supabase/server";
+import WeddingEnvelope from "@/components/WeddingEnvelope";
 
 export const revalidate = 60;
 
@@ -27,6 +28,7 @@ export default async function HomePage() {
           </div>
         </header>
         <ScheduleTimeline activities={activities ?? []} />
+        <WeddingEnvelope />
       </section>
     </>
   );
