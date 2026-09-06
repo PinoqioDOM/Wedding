@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import InvitationGate from "@/components/InvitationGate";
+import InvitationGate from "@/components/Invitationgate";
 import localFont from "next/font/local";
 
 export const metadata: Metadata = {
