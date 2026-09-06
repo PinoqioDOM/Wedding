@@ -1,5 +1,4 @@
-import InvitationCard from "@/components/InvitationCard";
-import InvitationGate from "@/components/InvitationGate";
+import WeddingEnvelope from "@/components/WeddingEnvelope";
 
 export const metadata = { title: "მოსაწვევი — თორნიკე & ქრისტინა" };
 
@@ -12,7 +11,7 @@ export default function InvitationPage({
 
   return (
     <section className="mx-auto max-w-3xl px-6 py-16">
-      {guestName ? <InvitationGate guestName={guestName} /> : <InvitationCard />}
+      <WeddingEnvelope guestName={guestName} />
     </section>
   );
 }

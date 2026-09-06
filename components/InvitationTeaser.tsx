@@ -9,9 +9,6 @@ export default function InvitationTeaser() {
         გახსენით მოწვევა, რომ ნახოთ ცერემონიის დეტალები, ჩაცმის სტილი და
         ღონისძიების ადგილის რუკა.
       </p>
-      <div className="mt-10 flex justify-center gap-3">
-        <Link href="/invitation" className="btn-gold">მოსაწვევის გახსნა</Link>
-      </div>
     </section>
   );
 }
