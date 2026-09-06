@@ -91,10 +91,8 @@ export default function WeddingEnvelope({
         <motion.div
           className="absolute flex flex-col items-center justify-center gap-2 sm:gap-3 md:gap-4 px-3 sm:px-6 md:px-8 py-3 sm:py-6 md:py-8 text-center z-10 rounded-[2px]"
           style={{
-            backgroundColor: `rgba(251,247,239, ${TEXT_BG_OPACITY})`,
-            boxShadow: letterOpen
-              ? "0 20px 45px rgba(20,15,8,0.25)"
-              : "0 0px 0px rgba(20,15,8,0)",
+            backgroundColor: letterOpen ? "transparent" : `rgba(251,247,239, ${TEXT_BG_OPACITY})`,
+            boxShadow: "none",
           }}
           initial={false}
           animate={{
@@ -111,14 +109,14 @@ export default function WeddingEnvelope({
           }}
         >
           <p
-            className="font-display text-base sm:text-xl md:text-xl text-ink-900 leading-snug"
+            className="font-display text-base sm:text-lg md:text-xl text-ink-900 leading-snug"
             style={{ textShadow: "0 1px 8px rgba(255,255,255,0.9), 0 1px 2px rgba(255,255,255,0.95)" }}
           >
             {guestName?.trim() ? guestName.trim() : "თორნიკე & ქრისტინა"}
           </p>
 
           <p
-            className="font-display italic text-lg sm:text-xl md:text-2xl text-ink-900 leading-snug min-h-[3.2em]"
+            className="font-display italic text-xl sm:text-xl md:text-2xl text-ink-900 leading-snug min-h-[3.2em]"
             style={{ textShadow: "0 1px 8px rgba(255,255,255,0.9), 0 1px 2px rgba(255,255,255,0.95)" }}
           >
             {typed}
