@@ -6,6 +6,7 @@ import { useState } from "react";
 const links = [
   { href: "/#story", label: "ჩვენი ისტორია" },
   { href: "/#schedule", label: "განრიგი" },
+  { href: "/invation", label: "მოსაწვევი" },
   { href: "/seating", label: "დარბაზი" },
   { href: "/gallery", label: "გალერეა" },
 ];
