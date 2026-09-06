@@ -9,7 +9,6 @@ type Stage = "closed" | "opening" | "open";
 const EASE = [0.22, 1, 0.36, 1] as const;
 const QUOTE = "გეპატიჟებით ჩვენს ქორწილში";
 
-// 0 = სურათი სრულად ჩანს ტექსტს მიღმა, 1 = სრულად ერთფეროვანი ფონი. აქ არეგულირეთ.
 const TEXT_BG_OPACITY = 0.55;
 
 function useTypewriter(text: string, active: boolean, speed = 45) {
@@ -40,40 +39,63 @@ export default function WeddingEnvelope({ guestName }: { guestName?: string }) {
   };
 
   const flapOpen = stage !== "closed";
+  const letterOpen = stage === "open";
 
   return (
-    <div className="min-h-[100vh] flex flex-col items-center font-extrabold justify-center gap-5 px-4">
+    <div className="min-h-[100vh] text-xl flex flex-col items-center font-extrabold justify-center gap-5 px-4">
       <div
-        className="relative w-full max-w-[350px] aspect-square"
+        className="relative w-full max-w-[400px] aspect-square overflow-hidden"
         style={{ perspective: 1600 }}
       >
-        {/* საერთო ფონის სურათი — ერთადერთი ფენა, ყოველთვის იქ */}
-        <div
+        {/* საერთო ფონის სურათი — ქრება წერილის გამოსვლის შემდეგ */}
+        <motion.div
           className="absolute inset-0 z-0"
           style={{
             backgroundImage: `url(${ENVELOPE_BG})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
+          initial={false}
+          animate={{ opacity: letterOpen ? 0 : 1 }}
+          transition={{
+            duration: 0.6,
+            ease: EASE,
+            delay: letterOpen ? 0.55 : 0,
+          }}
         />
 
-        {/* ტექსტის ქვეშა ფონი — აქ არეგულირებთ რამდენად ჩანდეს სურათი ტექსტს მიღმა */}
+        {/* წერილი — ამოდის კონვერტიდან და იკავებს მთელ სივრცეს */}
         <motion.div
-          className="absolute inset-[9%] flex flex-col mt-2 items-center justify-center gap-2.5 px-3 py-3 text-center z-10 rounded-[2px]"
-          style={{ backgroundColor: `rgba(251,247,239, ${TEXT_BG_OPACITY})` }}
+          className="absolute flex flex-col items-center justify-center gap-2.5 px-3 py-3 text-center z-10 rounded-[2px]"
+          style={{
+            backgroundColor: `rgba(251,247,239, ${TEXT_BG_OPACITY})`,
+            boxShadow: letterOpen
+              ? "0 20px 45px rgba(20,15,8,0.25)"
+              : "0 0px 0px rgba(20,15,8,0)",
+          }}
           initial={false}
-          animate={{ opacity: stage === "open" ? 1 : 0 }}
-          transition={{ duration: 0.5, ease: EASE }}
+          animate={{
+            inset: letterOpen ? "0%" : "9%",
+            opacity: letterOpen ? 1 : 0,
+            y: letterOpen ? 0 : 24,
+            scale: letterOpen ? 1 : 0.92,
+          }}
+          transition={{
+            inset: { duration: 0.7, ease: EASE, delay: letterOpen ? 0.15 : 0 },
+            opacity: { duration: 0.5, ease: EASE, delay: letterOpen ? 0.15 : 0 },
+            y: { duration: 0.7, ease: EASE, delay: letterOpen ? 0.15 : 0 },
+            scale: { duration: 0.7, ease: EASE, delay: letterOpen ? 0.15 : 0 },
+          }}
         >
           <p
-            className="font-display text-base text-ink-900 leading-snug"
+            className="font-display text-2xl text-ink-900 leading-snug"
             style={{ textShadow: "0 1px 8px rgba(255,255,255,0.9), 0 1px 2px rgba(255,255,255,0.95)" }}
           >
             თორნიკე <span className="font-script text-gold-500">&amp;</span> ქრისტინა
           </p>
 
           <p
-            className="font-display italic text-lg text-ink-900 leading-snug min-h-[3.2em]"
+            className="font-display italic text-3xl text-ink-900 leading-snug min-h-[3.2em]"
             style={{ textShadow: "0 1px 8px rgba(255,255,255,0.9), 0 1px 2px rgba(255,255,255,0.95)" }}
           >
             {typed}
@@ -86,7 +108,7 @@ export default function WeddingEnvelope({ guestName }: { guestName?: string }) {
             transition={{ duration: 0.5, ease: EASE }}
             style={{ textShadow: "0 1px 8px rgba(255,255,255,0.9), 0 1px 2px rgba(255,255,255,0.95)" }}
           >
-            <p className="text-sm text-ink-700/90">ვილა სააკაძე</p>
+            <p className="text-sm text-ink-700">ვილა სააკაძე</p>
             <p className="mt-2 text-sm text-ink-900">24 სექტემბერი 18:00</p>
             <Link
               href="/"
@@ -109,7 +131,7 @@ export default function WeddingEnvelope({ guestName }: { guestName?: string }) {
             type="button"
             aria-label="დააჭირეთ მოსაწვევის გასახსნელად"
             onClick={open}
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-gradient-to-b from-gold-400 to-gold-600 text-cream-50 grid place-items-center font-display text-sm ring-1 ring-gold-300/60 shadow-[0_4px_10px_rgba(0,0,0,0.3)] transition-transform hover:scale-105 z-40"
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-gradient-to-b text-xl from-gold-400 to-gold-600 text-cream-50 grid place-items-center font-display text-sm ring-1 ring-gold-300/60 shadow-[0_4px_10px_rgba(0,0,0,0.3)] transition-transform hover:scale-105 z-40"
           >
             თ&ქ
           </button>
@@ -177,6 +199,7 @@ function Flap({
         clipPath: CLIP[edge],
         transformOrigin: ORIGIN[edge],
         transformStyle: "preserve-3d",
+        backfaceVisibility: "hidden",
         zIndex: open ? 5 : 30,
         boxShadow: "inset 0 0 0 1px rgba(201,163,90,0.55)",
       }}

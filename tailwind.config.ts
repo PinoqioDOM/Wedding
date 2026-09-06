@@ -33,7 +33,7 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ['"Noto Serif Georgian"', "serif"],
+        display: ["var(--font-display)"],
         sans: ['"Noto Sans Georgian"', "sans-serif"],
         script: ['"Allura"', "cursive"],
       },
