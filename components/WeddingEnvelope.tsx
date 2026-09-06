@@ -50,7 +50,7 @@ export default function WeddingEnvelope({
   return (
     <div className="min-h-[100vh] flex flex-col items-center font-extrabold justify-center gap-5 px-4">
       <div
-        className="relative w-full max-w-[350px] aspect-square overflow-hidden"
+        className="relative w-full max-w-[300px] sm:max-w-[380px] md:max-w-[460px] lg:max-w-[520px] aspect-square overflow-hidden"
         style={{ perspective: 1600 }}
       >
         {/* საერთო ფონის სურათი — ქრება წერილის გამოსვლის შემდეგ */}
@@ -72,7 +72,7 @@ export default function WeddingEnvelope({
 
         {/* წერილი — ამოდის კონვერტიდან და იკავებს მთელ სივრცეს */}
         <motion.div
-          className="absolute flex flex-col items-center justify-center gap-2.5 px-3 py-3 text-center z-10 rounded-[2px]"
+          className="absolute flex flex-col items-center justify-center gap-2 sm:gap-3 md:gap-4 px-3 sm:px-6 md:px-8 py-3 sm:py-6 md:py-8 text-center z-10 rounded-[2px]"
           style={{
             backgroundColor: `rgba(251,247,239, ${TEXT_BG_OPACITY})`,
             boxShadow: letterOpen
@@ -94,14 +94,14 @@ export default function WeddingEnvelope({
           }}
         >
           <p
-            className="font-display text-base text-ink-900 leading-snug"
+            className="font-display text-base sm:text-lg md:text-xl text-ink-900 leading-snug"
             style={{ textShadow: "0 1px 8px rgba(255,255,255,0.9), 0 1px 2px rgba(255,255,255,0.95)" }}
           >
             {guestName?.trim() ? guestName.trim() : "თორნიკე & ქრისტინა"}
           </p>
 
           <p
-            className="font-display italic text-lg text-ink-900 leading-snug min-h-[3.2em]"
+            className="font-display italic text-lg sm:text-xl md:text-2xl text-ink-900 leading-snug min-h-[3.2em]"
             style={{ textShadow: "0 1px 8px rgba(255,255,255,0.9), 0 1px 2px rgba(255,255,255,0.95)" }}
           >
             {typed}
@@ -114,20 +114,20 @@ export default function WeddingEnvelope({
             transition={{ duration: 0.5, ease: EASE }}
             style={{ textShadow: "0 1px 8px rgba(255,255,255,0.9), 0 1px 2px rgba(255,255,255,0.95)" }}
           >
-            <p className="text-sm text-ink-700/90">ვილა სააკაძე</p>
-            <p className="mt-2 text-sm text-ink-900">24 სექტემბერი 18:00</p>
+            <p className="text-sm sm:text-base text-ink-700/90">ვილა სააკაძე</p>
+            <p className="mt-2 text-sm sm:text-base text-ink-900">24 სექტემბერი 18:00</p>
             {onContinue ? (
               <button
                 type="button"
                 onClick={onContinue}
-                className="mt-3 inline-block text-xs text-gold-600 hover:text-ink-900 underline underline-offset-4 decoration-gold-400/50 transition-colors"
+                className="mt-3 inline-block text-xs sm:text-sm text-gold-600 hover:text-ink-900 underline underline-offset-4 decoration-gold-400/50 transition-colors"
               >
                 სრული დეტალები →
               </button>
             ) : (
               <Link
                 href="/"
-                className="mt-3 inline-block text-xs text-gold-600 hover:text-ink-900 underline underline-offset-4 decoration-gold-400/50 transition-colors"
+                className="mt-3 inline-block text-xs sm:text-sm text-gold-600 hover:text-ink-900 underline underline-offset-4 decoration-gold-400/50 transition-colors"
               >
                 სრული დეტალები →
               </Link>
@@ -147,7 +147,7 @@ export default function WeddingEnvelope({
             type="button"
             aria-label="დააჭირეთ მოსაწვევის გასახსნელად"
             onClick={open}
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-gradient-to-b from-gold-400 to-gold-600 text-cream-50 grid place-items-center font-display text-sm ring-1 ring-gold-300/60 shadow-[0_4px_10px_rgba(0,0,0,0.3)] transition-transform hover:scale-105 z-40"
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-b from-gold-400 to-gold-600 text-cream-50 grid place-items-center font-display text-sm sm:text-base ring-1 ring-gold-300/60 shadow-[0_4px_10px_rgba(0,0,0,0.3)] transition-transform hover:scale-105 z-40"
           >
             თ&ქ
           </button>
