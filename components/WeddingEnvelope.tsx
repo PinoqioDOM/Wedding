@@ -9,7 +9,6 @@ type Stage = "closed" | "opening" | "open";
 const EASE = [0.22, 1, 0.36, 1] as const;
 const QUOTE = "გეპატიჟებით ჩვენს ქორწილში";
 
-// 0 = სურათი სრულად ჩანს ტექსტს მიღმა, 1 = სრულად ერთფეროვანი ფონი. აქ არეგულირეთ.
 const TEXT_BG_OPACITY = 0.55;
 
 function useTypewriter(text: string, active: boolean, speed = 45) {
@@ -51,7 +50,7 @@ export default function WeddingEnvelope({
   return (
     <div className="min-h-[100vh] flex flex-col items-center font-extrabold justify-center gap-5 px-4">
       <div
-        className="relative w-full max-w-[350px] aspect-square"
+        className="relative w-full max-w-[350px] aspect-square overflow-hidden"
         style={{ perspective: 1600 }}
       >
         {/* საერთო ფონის სურათი — ქრება წერილის გამოსვლის შემდეგ */}
@@ -216,6 +215,7 @@ function Flap({
         clipPath: CLIP[edge],
         transformOrigin: ORIGIN[edge],
         transformStyle: "preserve-3d",
+        backfaceVisibility: "hidden",
         zIndex: open ? 5 : 30,
         boxShadow: "inset 0 0 0 1px rgba(201,163,90,0.55)",
       }}
