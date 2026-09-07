@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import WeddingEnvelope from "./WeddingEnvelope";
 
@@ -8,12 +8,10 @@ function GateInner({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams();
   const guestName = searchParams.get("to") ?? undefined;
 
-  const [revealed, setRevealed] = useState(!guestName);
-
-  if (!revealed) {
+  if (guestName) {
     return (
       <div className="fixed inset-0 z-[999] bg-cream-50">
-        <WeddingEnvelope guestName={guestName} onContinue={() => setRevealed(true)} />
+        <WeddingEnvelope guestName={guestName} />
       </div>
     );
   }
