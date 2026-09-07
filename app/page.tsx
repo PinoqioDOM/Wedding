@@ -28,7 +28,6 @@ export default async function HomePage() {
           </div>
         </header>
         <ScheduleTimeline activities={activities ?? []} />
-        <WeddingEnvelope />
       </section>
     </>
   );
