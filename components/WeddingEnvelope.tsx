@@ -31,17 +31,15 @@ function useTypewriter(text: string, active: boolean, speed = 45) {
 
 export default function WeddingEnvelope({
   guestName,
-  onContinue,
 }: {
   guestName?: string;
-  onContinue?: () => void;
 }) {
   const [stage, setStage] = useState<Stage>("closed");
   const typed = useTypewriter(QUOTE, stage === "open");
 
   const open = () => {
     setStage("opening");
-    setTimeout(() => setStage("open"), 1100);
+    setTimeout(() => setStage("open"), 1600);
   };
 
   const flapOpen = stage !== "closed";
@@ -60,14 +58,14 @@ export default function WeddingEnvelope({
         initial={false}
         animate={{ opacity: letterOpen ? 1 : 0 }}
         transition={{
-          duration: 0.8,
+          duration: 1.1,
           ease: EASE,
-          delay: letterOpen ? 0.55 : 0,
+          delay: letterOpen ? 0.8 : 0,
         }}
       />
 
       <div
-        className="relative w-full max-w-[350px] sm:max-w-[380px] md:max-w-[460px] lg:max-w-[520px] aspect-square overflow-hidden"
+        className="relative w-full max-w-[300px] sm:max-w-[380px] md:max-w-[460px] lg:max-w-[520px] aspect-square overflow-hidden"
         style={{ perspective: 1600 }}
       >
         {/* საერთო ფონის სურათი (კონვერტი) — ქრება წერილის გამოსვლის შემდეგ */}
@@ -81,9 +79,9 @@ export default function WeddingEnvelope({
           initial={false}
           animate={{ opacity: letterOpen ? 0 : 1 }}
           transition={{
-            duration: 0.6,
+            duration: 0.8,
             ease: EASE,
-            delay: letterOpen ? 0.55 : 0,
+            delay: letterOpen ? 0.7 : 0,
           }}
         />
 
@@ -102,21 +100,30 @@ export default function WeddingEnvelope({
             scale: letterOpen ? 1 : 0.92,
           }}
           transition={{
-            inset: { duration: 0.7, ease: EASE, delay: letterOpen ? 0.15 : 0 },
-            opacity: { duration: 0.5, ease: EASE, delay: letterOpen ? 0.15 : 0 },
-            y: { duration: 0.7, ease: EASE, delay: letterOpen ? 0.15 : 0 },
-            scale: { duration: 0.7, ease: EASE, delay: letterOpen ? 0.15 : 0 },
+            inset: { duration: 0.9, ease: EASE, delay: letterOpen ? 0.25 : 0 },
+            opacity: { duration: 0.7, ease: EASE, delay: letterOpen ? 0.25 : 0 },
+            y: { duration: 0.9, ease: EASE, delay: letterOpen ? 0.25 : 0 },
+            scale: { duration: 0.9, ease: EASE, delay: letterOpen ? 0.25 : 0 },
           }}
         >
           <p
             className="font-display text-base sm:text-lg md:text-xl text-ink-900 leading-snug"
             style={{ textShadow: "0 1px 8px rgba(255,255,255,0.9), 0 1px 2px rgba(255,255,255,0.95)" }}
           >
-            {guestName?.trim() ? guestName.trim() : "თორნიკე & ქრისტინა"}
+            თორნიკე 💍 ქრისტინა
           </p>
 
+          {guestName?.trim() && (
+            <p
+              className="font-display text-sm sm:text-base text-ink-800/90 leading-snug"
+              style={{ textShadow: "0 1px 8px rgba(255,255,255,0.9), 0 1px 2px rgba(255,255,255,0.95)" }}
+            >
+              ძვირფასო {guestName.trim()}
+            </p>
+          )}
+
           <p
-            className="font-display italic text-xl sm:text-xl md:text-2xl text-ink-900 leading-snug min-h-[3.2em]"
+            className="font-display italic text-lg sm:text-xl md:text-2xl text-ink-900 leading-snug min-h-[3.2em]"
             style={{ textShadow: "0 1px 8px rgba(255,255,255,0.9), 0 1px 2px rgba(255,255,255,0.95)" }}
           >
             {typed}
@@ -131,30 +138,20 @@ export default function WeddingEnvelope({
           >
             <p className="text-sm sm:text-base text-ink-700/90">ვილა სააკაძე</p>
             <p className="mt-2 text-sm sm:text-base text-ink-900">24 სექტემბერი 18:00</p>
-            {onContinue ? (
-              <button
-                type="button"
-                onClick={onContinue}
-                className="mt-3 inline-block text-xs sm:text-sm text-gold-600 hover:text-ink-900 underline underline-offset-4 decoration-gold-400/50 transition-colors"
-              >
-                სრული დეტალები →
-              </button>
-            ) : (
-              <Link
-                href="/"
-                className="mt-3 inline-block text-xs sm:text-sm text-gold-600 hover:text-ink-900 underline underline-offset-4 decoration-gold-400/50 transition-colors"
-              >
-                სრული დეტალები →
-              </Link>
-            )}
+            <Link
+              href="https://wedding-flax-gamma-36.vercel.app/"
+              className="mt-3 inline-block text-xs sm:text-sm text-gold-600 hover:text-ink-900 underline underline-offset-4 decoration-gold-400/50 transition-colors"
+            >
+              სრული დეტალები →
+            </Link>
           </motion.div>
         </motion.div>
 
         {/* 4 ფლაპი — თანმიმდევრობით, საათის ისრის მიმართულებით (ზედა → მარჯვენა → ქვედა → მარცხენა) */}
         <Flap edge="top" open={flapOpen} delay={0} />
-        <Flap edge="right" open={flapOpen} delay={0.15} />
-        <Flap edge="bottom" open={flapOpen} delay={0.3} />
-        <Flap edge="left" open={flapOpen} delay={0.45} />
+        <Flap edge="right" open={flapOpen} delay={0.22} />
+        <Flap edge="bottom" open={flapOpen} delay={0.44} />
+        <Flap edge="left" open={flapOpen} delay={0.66} />
 
         {/* ბეჭედი */}
         {stage === "closed" && (
@@ -236,7 +233,7 @@ function Flap({
         boxShadow: "inset 0 0 0 1px rgba(201,163,90,0.55)",
       }}
       animate={{ [axis]: angle }}
-      transition={{ duration: 0.6, ease: EASE, delay: open ? delay : 0 }}
+      transition={{ duration: 0.9, ease: EASE, delay: open ? delay : 0 }}
     />
   );
 }
