@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 type Stage = "closed" | "opening" | "open";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-const QUOTE = "გეპატიჟებით ჩვენს ქორწილში";
+const QUOTE = "გეპატიჟებით ჩვენს ქორწილში, ჩვენი ბედნიერების გასაზიარებლად";
 
 const TEXT_BG_OPACITY = 0.55;
 
