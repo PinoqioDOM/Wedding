@@ -1,6 +1,5 @@
 import Hero from "@/components/Hero";
 import Countdown from "@/components/Countdown";
-import InvitationTeaser from "@/components/InvitationTeaser";
 import ScheduleTimeline from "@/components/ScheduleTimeline";
 import { createClient } from "@/lib/supabase/server";
 import WeddingEnvelope from "@/components/WeddingEnvelope";
@@ -18,7 +17,6 @@ export default async function HomePage() {
     <>
       <Hero />
       <Countdown />
-      <InvitationTeaser />
       <section id="schedule" className="mx-auto max-w-5xl px-6 py-24">
         <header className="text-center mb-14">
           <p className="label">დღის განრიგი</p>
@@ -28,6 +26,7 @@ export default async function HomePage() {
           </div>
         </header>
         <ScheduleTimeline activities={activities ?? []} />
+        <WeddingEnvelope />
       </section>
     </>
   );
