@@ -6,7 +6,6 @@ import { useState } from "react";
 const links = [
   { href: "/#story", label: "ჩვენი ისტორია" },
   { href: "/#schedule", label: "განრიგი" },
-  { href: "/seating", label: "დარბაზი" },
   { href: "/gallery", label: "გალერეა" },
 ];
 
@@ -21,13 +20,12 @@ export default function Navbar() {
         <ul className="hidden lg:flex items-center gap-8 text-sm tracking-wide relative z-10">
           {links.map((l) => (
             <li key={l.href}>
-              <Link href={l.href} className="text-ink-800/80 hover:text-ink-900 transition cursor-pointer">
+              <Link href={l.href} className="text-ink-800/80 font-display text-xl font-extrabold hover:text-ink-900 transition cursor-pointer">
                 {l.label}
               </Link>
             </li>
           ))}
         </ul>
-        <Link href="/admin" className="hidden lg:inline-flex btn-ghost relative z-10">ადმინი</Link>
 
         <button
           aria-label="მენიუს გახსნა"
@@ -45,14 +43,11 @@ export default function Navbar() {
           <ul className="flex flex-col px-6 py-4 gap-3 text-sm">
             {links.map((l) => (
               <li key={l.href}>
-                <Link href={l.href} className="block py-1" onClick={() => setOpen(false)}>
+                <Link href={l.href} className="block font-display text-xl py-1" onClick={() => setOpen(false)}>
                   {l.label}
                 </Link>
               </li>
             ))}
-            <li>
-              <Link href="/admin" className="block py-1 text-gold-600">ადმინი</Link>
-            </li>
           </ul>
         </div>
       )}
