@@ -34,18 +34,18 @@ export default function Hero() {
               თორნიკე <span className="font-script text-gold-500 text-[0.55em] align-middle">&amp;</span> ქრისტინა
             </h1>
 
-            <div className="mt-8 grid grid-cols-3 gap-4 max-w-md">
+            <div className="mt-4 grid grid-cols-3 gap-4 max-w-md">
               <div className="text-center">
                 <p className="label">თარიღი</p>
-                <p className="font-display text-2xl mt-1">24·09·26</p>
+                <p className="font-display text-3xl md:text-4xl mt-1">24·09·26</p>
               </div>
               <div className="text-center border-x border-cream-200">
                 <p className="label">სად</p>
-                <p className="font-display text-lg mt-1">ვილა სააკაძე</p>
+                <p className="font-display text-xl md:text-2xl mt-1">ვილა სააკაძე</p>
               </div>
               <div className="text-center">
                 <p className="label">დრო</p>
-                <p className="font-display text-2xl mt-1">18:00</p>
+                <p className="font-display text-3xl md:text-4xl mt-1">18:00</p>
               </div>
             </div>
 
