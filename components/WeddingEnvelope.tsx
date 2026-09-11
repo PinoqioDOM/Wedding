@@ -159,7 +159,8 @@ export default function WeddingEnvelope({
             type="button"
             aria-label="დააჭირეთ მოსაწვევის გასახსნელად"
             onClick={open}
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-b from-gold-400 to-gold-600 text-cream-50 text-xl grid place-items-center font-display text-base sm:text-lg ring-1 ring-gold-300/60 shadow-[0_4px_10px_rgba(0,0,0,0.3)] transition-transform hover:scale-105 z-40">
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-b from-gold-400 to-gold-600 text-cream-50 grid place-items-center font-display text-[11px] sm:text-lg leading-tight text-center px-1 ring-1 ring-gold-300/60 shadow-[0_4px_10px_rgba(0,0,0,0.3)] transition-transform hover:scale-105 z-40"
+          >
             მოსაწვევი
           </button>
         )}
