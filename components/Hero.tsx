@@ -39,7 +39,14 @@ export default function Hero() {
               </div>
               <div className="text-center border-x border-cream-200">
                 <p className="label">სად</p>
-                <p className="font-display text-xl md:text-2xl mt-1">ვილა სააკაძე</p>
+                  <a
+                    href="https://www.google.com/maps/place/Villa+Saakadze/@41.7399027,45.0521015,17z/data=!3m1!4b1!4m6!3m5!1s0x4044170014d324c7:0x3f9b7159c13d3d6f!8m2!3d41.7399027!4d45.0521015!16s%2Fg%2F11vqzqgt_t?entry=ttu&g_ep=EgoyMDI2MDkwOC4wIKXMDSoASAFQAw%3D%3D"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-display text-xl md:text-2xl mt-1 block hover:text-gold-600 underline underline-offset-4 decoration-gold-400/50 transition-colors"
+                  >
+                  ვილა სააკაძე
+                </a>
               </div>
               <div className="text-center">
                 <p className="label">დრო</p>
@@ -49,7 +56,7 @@ export default function Hero() {
 
             <p className="mt-6 max-w-md text-2xl font-display text-ink-700/80 leading-relaxed">
               {venue}. შემოგვიერთდით საზეიმო ცერემონიაზე, საუცხოო ვახშამზე
-              და ცეკვებით სავსე ღამეზე ვარსკვლავების ქვეშ.
+              და ცეკვებით სავსე ღამეზე.
             </p>
           </div>
         </div>
