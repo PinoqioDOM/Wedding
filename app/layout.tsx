@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import InvitationGate from "@/components/Invitationgate";
 import localFont from "next/font/local";
+import Attendance from "@/components/Attendance";
 
 export const metadata: Metadata = {
   title: "თორნიკე & ქრისტინა — 24 სექტემბერი 2026",
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <InvitationGate>
           <Navbar />
           <main className="min-h-[calc(100vh-8rem)]">{children}</main>
+          <Attendance />
           <Footer />
         </InvitationGate>
       </body>
